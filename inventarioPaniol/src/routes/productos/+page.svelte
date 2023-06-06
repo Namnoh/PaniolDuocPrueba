@@ -102,12 +102,14 @@
 	/* RESPONSIVE TABLET */
 	@media (min-width: 481px) and (max-width: 767px) {
 		.cardContainer {
+			min-height: 100vh;
 			justify-content: space-between;
+			align-content: center;
 		}
 
 		.card {
 			width: 48%;
-			height: 90%;
+			height: 350px;
 			margin: 0 0 5% 0;
 		}
 
