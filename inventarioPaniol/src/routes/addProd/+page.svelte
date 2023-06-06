@@ -160,7 +160,8 @@
 		}
 
 		textarea,
-		input {
+		input,
+		select {
 			width: 100%;
 		}
 	}

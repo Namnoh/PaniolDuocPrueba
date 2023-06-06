@@ -13,10 +13,9 @@
 		<a href="/addProd" class="btn btn-primary">Agregar Nuevo Producto</a>
 	</div>
 	<hr />
-	<br /><br />
 
 	<div class="row">
-		{#if productos==null}
+		{#if productos == null}
 			<div class="msg">
 				<h3>No se ha ingresado ningún producto.</h3>
 			</div>
@@ -60,7 +59,6 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		/* justify-content: center; */
 	}
 
 	.card {
@@ -81,12 +79,14 @@
 	/* RESPONSIVE CELULAR */
 	@media only screen and (max-device-width: 480px) {
 		.cardContainer {
+			min-height: 100vh;
 			justify-content: space-between;
+			align-content: center;
 		}
 
 		.card {
 			width: 48%;
-			height: 32%;
+			height: 300px;
 			margin: 0 0 5% 0;
 		}
 
@@ -105,15 +105,9 @@
 			justify-content: space-between;
 		}
 
-		/* .card {
-			width: 220px;
-			height: 390px;
-			margin: 0 0 5% 0;
-		} */
-
 		.card {
 			width: 48%;
-			height: 32%;
+			height: 90%;
 			margin: 0 0 5% 0;
 		}
 
