@@ -1,11 +1,24 @@
+<script lang="ts">
+	import { user } from '../stores';
+	$:User = $user;
+	import { onMount } from 'svelte';
+</script>
+
+
 <!-- BODY INICIO -->
 <div class="container">
 	<div class="containerMain">
 		<div class="cartas row">
 			<div class="cartaCol col">
 				<h2 class="cartaText">¡Reserva los artículos que quieras aquí!</h2>
-				<p class="cartaText">Ya puedes reservar los artículos que quieres con nuestra plataforma.</p>
-				<a href="reservar.html" class="btn btn-primary">Reservar Aquí</a>
+				{#if User}
+				<p class="cartaText">{User?.name??''} ya puedes reservar los artículos que quieres con nuestra plataforma.</p>
+				<a href="/reservar" class="btn btn-primary">Reservar Aquí</a>
+				{/if}
+				{#if !User}
+				<p class="cartaText">Inicia sesión para utilizar los servicios de reserva.</p>
+				<a href="/login" class="btn btn-primary">Iniciar sesión</a>
+				{/if}
 			</div>
 			<div class="cartaCol col imgBox">
 				<img

@@ -1,5 +1,46 @@
 a,
 a:hover {
-    text-decoration: none;
-    color: inherit;
+	text-decoration: none;
+	color: inherit;
+}
+
+.logoNavSm {
+	display: none;
+}
+
+
+@media only screen and (max-device-width: 480px) {
+	.logoNavSm {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.imgNavSm {
+		margin: 0 !important;
+		margin-top: 0;
+		padding: 0;
+		height: fit-content;
+	}
+
+	.logoNavSm a {
+		margin: 0;
+	}
+
+	.logoNav {
+		display: none;
+	}
+
+	.noti {
+		display: none;
+	}
+
+    .dropdown-item {
+        white-space: normal!important;
+    }
+
+    .dropdown-menu {
+        min-width: 70vw;
+        max-width: 70vw;
+    }
 }

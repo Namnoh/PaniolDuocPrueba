@@ -42,6 +42,9 @@ footer{
 
 /* RESPONSIVE CELULAR */
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .content-foo i {
+        padding: 0% 5% 0 5%;
+    }
     .container-footer {
         align-items: center;
         flex-direction: column;

@@ -1,7 +1,22 @@
+<!-- <script>
+	const stars = document.querySelectorAll(".star");
+
+	stars.forEach(function(star, index) {
+	star.addEventListener("click", function() {
+		for (let i = 0; i <= index; i++) {
+		stars[i].classList.add("checked");
+		}
+		for (let i = index + 1; i < stars.length; i++) {
+		stars[i].classList.remove("checked");
+		}
+	})
+	});
+
+</script> -->
 <!-- BODY RESERVAR -->
 <div class="container">
 	<div class="row">
-		<div class="col-md-2" style="margin: auto; border-color: black">
+		<div class="col-md-2 first-section">
 			<div class="filtro">
 				<div class="list-group" role="tablist">
 					<a
@@ -116,14 +131,13 @@
 							<div id="product-1" class="single-product">
 								<div class="part-1">
 									<ul>
+										<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+										<li><a href="#"><i class="fas fa-heart" /></a></li>
+										<li><a href="#"><i class="fas fa-plus" /></a></li>
 										<li>
-											<a href="#"><i class="fas fa-shopping-cart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-heart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-plus" /></a>
+											<a data-bs-toggle="modal" data-bs-target="#productoModal"
+												><i class="fas fa-expand" /></a
+											>
 										</li>
 									</ul>
 								</div>
@@ -138,14 +152,13 @@
 								<div class="part-1">
 									<span class="discount">Sin stock</span>
 									<ul>
+										<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+										<li><a href="#"><i class="fas fa-heart" /></a></li>
+										<li><a href="#"><i class="fas fa-plus" /></a></li>
 										<li>
-											<a href="#"><i class="fas fa-shopping-cart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-heart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-plus" /></a>
+											<a data-bs-toggle="modal" data-bs-target="#productoModal"
+												><i class="fas fa-expand" /></a
+											>
 										</li>
 									</ul>
 								</div>
@@ -159,14 +172,13 @@
 							<div id="product-3" class="single-product">
 								<div class="part-1">
 									<ul>
+										<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+										<li><a href="#"><i class="fas fa-heart" /></a></li>
+										<li><a href="#"><i class="fas fa-plus" /></a></li>
 										<li>
-											<a href="#"><i class="fas fa-shopping-cart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-heart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-plus" /></a>
+											<a data-bs-toggle="modal" data-bs-target="#productoModal"
+												><i class="fas fa-expand" /></a
+											>
 										</li>
 									</ul>
 								</div>
@@ -181,14 +193,13 @@
 								<div class="part-1">
 									<span class="new">Recien agregado</span>
 									<ul>
+										<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+										<li><a href="#"><i class="fas fa-heart" /></a></li>
+										<li><a href="#"><i class="fas fa-plus" /></a></li>
 										<li>
-											<a href="#"><i class="fas fa-shopping-cart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-heart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-plus" /></a>
+											<a data-bs-toggle="modal" data-bs-target="#productoModal"
+												><i class="fas fa-expand" /></a
+											>
 										</li>
 									</ul>
 								</div>
@@ -202,14 +213,13 @@
 							<div id="product-5" class="single-product">
 								<div class="part-1">
 									<ul>
+										<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+										<li><a href="#"><i class="fas fa-heart" /></a></li>
+										<li><a href="#"><i class="fas fa-plus" /></a></li>
 										<li>
-											<a href="#"><i class="fas fa-shopping-cart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-heart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-plus" /></a>
+											<a data-bs-toggle="modal" data-bs-target="#productoModal"
+												><i class="fas fa-expand" /></a
+											>
 										</li>
 									</ul>
 								</div>
@@ -223,19 +233,14 @@
 							<div id="product-6" class="single-product">
 								<div class="part-1">
 									<span class="few-units">Pocas unidades</span>
-									<ul
-										style="
-                                        display: flex;
-                                        justify-content: center;
-                                        margin: auto;">
+									<ul>
+										<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+										<li><a href="#"><i class="fas fa-heart" /></a></li>
+										<li><a href="#"><i class="fas fa-plus" /></a></li>
 										<li>
-											<a href="#"><i class="fas fa-shopping-cart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-heart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-plus" /></a>
+											<a data-bs-toggle="modal" data-bs-target="#productoModal"
+												><i class="fas fa-expand" /></a
+											>
 										</li>
 									</ul>
 								</div>
@@ -249,14 +254,13 @@
 							<div id="product-7" class="single-product">
 								<div class="part-1">
 									<ul>
+										<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+										<li><a href="#"><i class="fas fa-heart" /></a></li>
+										<li><a href="#"><i class="fas fa-plus" /></a></li>
 										<li>
-											<a href="#"><i class="fas fa-shopping-cart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-heart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-plus" /></a>
+											<a data-bs-toggle="modal" data-bs-target="#productoModal"
+												><i class="fas fa-expand" /></a
+											>
 										</li>
 									</ul>
 								</div>
@@ -271,14 +275,13 @@
 								<div class="part-1">
 									<span class="few-units">Ultima unidad</span>
 									<ul>
+										<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+										<li><a href="#"><i class="fas fa-heart" /></a></li>
+										<li><a href="#"><i class="fas fa-plus" /></a></li>
 										<li>
-											<a href="#"><i class="fas fa-shopping-cart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-heart" /></a>
-										</li>
-										<li>
-											<a href="#"><i class="fas fa-plus" /></a>
+											<a data-bs-toggle="modal" data-bs-target="#productoModal"
+												><i class="fas fa-expand" /></a
+											>
 										</li>
 									</ul>
 								</div>
@@ -295,7 +298,63 @@
 </div>
 <!-- FIN BODY RESERVAR -->
 
+<!-- MODAL -->
+<!-- Botón para abrir el modal -->
+<button
+	type="button"
+	class="btn btn-primary"
+	data-bs-toggle="modal"
+	data-bs-target="#quickViewModal"
+>
+	Quick View
+</button>
 
+<!-- Modal de Quick View -->
+<div
+	class="modal fade"
+	id="productoModal"
+	tabindex="-1"
+	aria-labelledby="quickViewModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="quickViewModalLabel">Vista rápida del producto</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-6">
+						<img
+							src="data:image/jpeg;base64,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"
+							alt="Producto"
+							class="img-fluid"
+						/>
+					</div>
+					<div class="col-md-6">
+						<h4>Nombre del producto</h4>
+						<p>Categoría: Tecnología</p>
+						<p>Stock: 10 unidades</p>
+						<div class="rating">
+							<i class="fa-solid fa-star star" />
+							<i class="fa-solid fa-star star" />
+							<i class="fa-solid fa-star star" />
+							<i class="fa-solid fa-star star" />
+							<i class="fa-solid fa-star star" />
+						</div>
+						<button type="button" class="btn btn-primary">Agregar al carrito</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- FIN MODAL -->
 
 <!-- RESERVAR CSS -->
 
@@ -322,6 +381,8 @@
 
 	.section-products .single-product {
 		margin-bottom: 26px;
+		/* border: solid 1px #9B9B9B; */
+		box-shadow: 7px 10px 15px 0px rgba(0, 0, 0, 0.1);
 	}
 
 	.section-products .single-product .part-1 {
@@ -474,5 +535,35 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.first-section {
+		margin: auto;
+		border-color: black;
+	}
+
+	@media only screen and (max-device-width: 480px) {
+		.first-section {
+			margin-top: 10%;
+		}
+	}
+	.product_view .modal-dialog {
+		max-width: 800px;
+		width: 100%;
+	}
+
+	.space-ten {
+		padding: 10px 0;
+	}
+	.star {
+		font-size: 32px;
+		color: #ddd;
+		transition: color 0.3s;
+		cursor: pointer;
+	}
+
+	.star:hover,
+	.star.checked {
+		color: gold;
 	}
 </style>
