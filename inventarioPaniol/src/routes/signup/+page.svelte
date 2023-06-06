@@ -1,5 +1,59 @@
 <script lang="ts">
 	export let form;
+
+	const uppercaseRegex = /[A-Z]/;
+	const lowercaseRegex = /[a-z]/;
+	const specialCharRegex = /[\W_]/;
+	const numberRegex = /\d/;
+	let text = '';
+	let opacity1 = false;
+	let opacity2 = false;
+	let opacity3 = false;
+	let opacity4 = false;
+	let opacity5 = false;
+	function passReview(event, texto = '') {
+		if (event && texto == '') {
+			text = event.target.value;
+		}
+		if (!event && texto != '') {
+			text = texto;
+		}
+		if (text.length >= 8) {
+			opacity1 = true;
+		} else {
+			opacity1 = false;
+		}
+		if (lowercaseRegex.test(text)) {
+			opacity2 = true;
+		} else {
+			opacity2 = false;
+		}
+		if (numberRegex.test(text) || specialCharRegex.test(text)) {
+			opacity3 = true;
+		} else {
+			opacity3 = false;
+		}
+		var specialCharAndNumberCount = 0;
+		for (var i = 0; i < text.length; i++) {
+			if (specialCharRegex.test(text[i]) || numberRegex.test(text[i])) {
+				specialCharAndNumberCount++;
+			}
+		}
+		if (uppercaseRegex.test(text)) {
+			opacity4 = true;
+		} else {
+			opacity4 = false;
+		}
+		if (specialCharAndNumberCount >= 3) {
+			opacity5 = true;
+		} else {
+			opacity5 = false;
+		}
+	}
+
+	if (form && form.password) {
+		passReview(null,form.password);
+	}
 </script>
 
 <!-- BODY REGISTRAR USUARIO -->
@@ -8,7 +62,7 @@
 		<h1>REGISTRO DE USUARIO</h1>
 		<hr />
 		<br />
-		
+
 		<form method="post" action="?/signup">
 			<div class="form-item">
 				<label for="name">Nombre<sup><small>*</small></sup></label>
@@ -25,7 +79,7 @@
 					required
 				/>
 			</div>
-			<div class="form-item">
+			<div class="form-item form-pass">
 				<label for="password">Contraseña<sup><small>*</small></sup></label>
 				<input
 					class:fieldError={form?.weakPassword}
@@ -33,8 +87,71 @@
 					id="password"
 					type="password"
 					name="password"
+					on:input={passReview}
 					required
 				/>
+			</div>
+			<div class="passContraints">
+				<small class="pass" style={opacity1 ? 'color: #D4D4D7' : ''}>
+					<svg
+						width="8"
+						height="8"
+						viewBox="0 0 8 8"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity1 ? '0.2' : ''} />
+					</svg>
+					8 Carácteres como mínimo.
+				</small>
+				<small class="pass" style={opacity2 ? 'color: #D4D4D7' : ''}>
+					<svg
+						width="8"
+						height="8"
+						viewBox="0 0 8 8"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity2 ? '0.2' : ''} />
+					</svg>
+					Un carácter en minúsculas.
+				</small>
+				<small class="pass" style={opacity3 ? 'color: #D4D4D7' : ''}>
+					<svg
+						width="8"
+						height="8"
+						viewBox="0 0 8 8"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity3 ? '0.2' : ''} />
+					</svg>
+					Un número o carácter especial.
+				</small><br />
+				<small class="pass" style={opacity4 ? 'color: #D4D4D7' : ''}>
+					<svg
+						width="8"
+						height="8"
+						viewBox="0 0 8 8"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity4 ? '0.2' : ''} />
+					</svg>
+					Una carácter en mayúsculas.
+				</small>
+				<small class="pass" style={opacity5 ? 'color: #D4D4D7' : ''}>
+					<svg
+						width="8"
+						height="8"
+						viewBox="0 0 8 8"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity5 ? '0.2' : ''} />
+					</svg>
+					3 o más carácteres especiales y/o números.
+				</small>
 			</div>
 			<div class="form-item">
 				<label for="password2">Repita la Contraseña<sup><small>*</small></sup></label>
@@ -119,6 +236,18 @@
 
 	.fieldError {
 		outline: 2px solid #ff0000;
+	}
+
+	.passContraints {
+		margin-bottom: 2%;
+	}
+
+	.form-pass {
+		margin-bottom: 0%;
+	}
+
+	.pass {
+		color: black;
 	}
 
 	/* RESPONSIVE CELULAR */

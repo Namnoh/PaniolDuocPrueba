@@ -64,7 +64,7 @@ export const actions: Actions = {
 			if (Pilin !== domainAlum && Pilin !== domainProf && Pilin != domainAdmin) {
 				SignUpResponse.error = true;
 				SignUpResponse.message =
-					'El Email ingresado no contiene los dominios de la Institución.' + ',' + Pilin;
+					'El email ingresado no contiene los dominios de la institución: ' + Pilin;
 				return fail(400, SignUpResponse);
 			}
 			if (Pilin == domainAlum) {
@@ -126,7 +126,7 @@ export const actions: Actions = {
 		const resultOfInsert = await registerUser(collection, userToInsert);
 		if (resultOfInsert.acknowledged && resultOfInsert.insertedId) {
 			
-			throw redirect(303, '/');
+			throw redirect(303, '/login');
 		}
 
 		SignUpResponse.password = '';

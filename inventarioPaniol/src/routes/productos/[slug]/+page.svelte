@@ -2,7 +2,7 @@
 	export let data;
 	let producto = data;
 
-	console.log(producto);
+	// console.log(producto);
 
 	export let form;
 
