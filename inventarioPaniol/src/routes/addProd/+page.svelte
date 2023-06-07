@@ -58,7 +58,7 @@
 			<div class="form-item">
 				{#if url}
 					<small style="color: black;">Preview de la Imagen:</small>
-					<img src={url} alt="El enlace no es correcto." width="200" height="200" />
+					<img src={url} alt="El enlace no es correcto." width="250" height="200" />
 				{/if}
 			</div>
 

@@ -10,7 +10,8 @@
 
 	<div class="header">
 		<h1>Gestión de Productos</h1>
-		<a href="/addProd" class="btn btn-primary">Agregar Nuevo Producto</a>
+		<a href="/addProd" class="btn btn-primary addBig">Agregar Nuevo Producto</a>
+		<a href="/addProd" class="btn btn-primary addSmall">+</a>
 	</div>
 	<hr />
 
@@ -40,8 +41,10 @@
 
 <style>
 	.msg {
+		text-align: center;
 		display: flex;
 		justify-content: center;
+		padding: 7%;
 	}
 
 	.header {
@@ -65,7 +68,7 @@
 		text-align: center;
 		margin: 0 0 5% 1%;
 		width: 300px;
-		height: 450px;
+		height: 400px;
 	}
 
 	a {
@@ -73,15 +76,27 @@
 	}
 
 	img {
-		height: 300px;
+		padding-top: 0.5rem;
+		height: 250px;
+	}
+
+	.addSmall {
+		display: none;
 	}
 
 	/* RESPONSIVE CELULAR */
 	@media only screen and (max-device-width: 480px) {
+		.addBig {
+			display: none;
+		}
+		.addSmall {
+			display: unset;
+		}
+
 		.cardContainer {
-			min-height: 100vh;
+			/* min-height: 100vh; */
 			justify-content: space-between;
-			align-content: center;
+			/* align-content: center; */
 		}
 
 		.card {
@@ -101,6 +116,13 @@
 
 	/* RESPONSIVE TABLET */
 	@media (min-width: 481px) and (max-width: 767px) {
+		.addBig {
+			display: none;
+		}
+		.addSmall {
+			display: unset;
+		}
+
 		.cardContainer {
 			min-height: 100vh;
 			justify-content: space-between;
@@ -123,6 +145,13 @@
 	}
 
 	@media only screen and (min-device-width: 768px) and (max-device-width: 991px) {
+		.addBig {
+			display: none;
+		}
+		.addSmall {
+			display: unset;
+		}
+		
 		.cardContainer {
 			justify-content: space-between;
 		}

@@ -23,7 +23,7 @@
 			<div class="cartaCol col imgBox">
 				<img
 					class="cartaImagen"
-					src="https://duoc.hiringroom.com/data/accounts/duoc/microsite/e1f179a255d28e2c616c432f163986ed.jpg"
+					src="../duoc-amarillo.jpeg"
 					alt="Logo Duoc"
                     width="80%"
                     height="40%"
