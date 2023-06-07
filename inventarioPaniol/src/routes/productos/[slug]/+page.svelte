@@ -36,9 +36,7 @@
 			>
 			<br /><br />
 			<div class="buttons">
-				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"
-					>Modificar</button
-				>
+				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Modificar</button>
 				<div class="deleteForm">
 					<form action="?/eliminar&id={producto.id}" method="POST">
 						<button type="submit" class="btn btn-danger">Eliminar</button>
@@ -61,7 +59,7 @@
 		<div class="modal-content">
 			<!-- Contenido del modal -->
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Detalle de Reserva: 03 | Fabián Muñoz</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Detalle del producto: {producto.id} | {producto.nameD}</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
 			</div>
 			<div class="modal-body">

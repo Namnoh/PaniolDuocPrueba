@@ -151,7 +151,7 @@
 		.addSmall {
 			display: unset;
 		}
-		
+
 		.cardContainer {
 			justify-content: space-between;
 		}

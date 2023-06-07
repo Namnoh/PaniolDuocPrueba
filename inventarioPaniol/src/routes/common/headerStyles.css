@@ -4,12 +4,35 @@ a:hover {
 	color: inherit;
 }
 
+.rutaNav {
+	transition: color 0.5s ease-in-out, font-weight 0.16s ease-in-out!important;
+	font-weight: normal!important;
+}
+
+.rutaNav:hover {
+	color: #333!important;
+	font-weight: bold!important;
+	transition: none 0.16s ease-in-out!important;
+}
+
 .logoNavSm {
 	display: none;
 }
 
+.avatarSm {
+	display: none;
+}
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-device-width: 991px) {
+	.navbar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		background-color: #333;
+		z-index: 9999;
+	}
+
 	.logoNavSm {
 		display: flex;
 		align-items: center;
@@ -35,12 +58,24 @@ a:hover {
 		display: none;
 	}
 
-    .dropdown-item {
-        white-space: normal!important;
-    }
+	.dropdown-item {
+		white-space: normal !important;
+	}
 
-    .dropdown-menu {
-        min-width: 70vw;
-        max-width: 70vw;
-    }
+	.dropdown-menu {
+		min-width: 70vw;
+		max-width: 70vw;
+	}
+
+	.defaultAvatar {
+		display: none;
+	}
+
+	.avatarSm {
+		display: unset;
+	}
+
+	.avatarLink {
+		margin: 0 !important;
+	}
 }

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { user } from '../stores';
 	$:User = $user;
-	import { onMount } from 'svelte';
 </script>
 
 

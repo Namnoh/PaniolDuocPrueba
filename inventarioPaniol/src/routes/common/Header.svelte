@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { user } from '../../stores';
-    $:User = $user;
-    // console.log(`HEADER | User: ${User}`)
+	import { user } from '../../stores';
+	$: User = $user;
+	// console.log(`HEADER | User: ${User}`)
 
 	let showClass = true;
 	let endClass = true;
@@ -43,8 +43,43 @@
 				/>
 			</a>
 		</div>
+		<!-- AVATAR -->
+		<div class="dropdown avatarSm">
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<a
+				class="text-reset me-3 dropdown-toggle hidden-arrow avatarLink"
+				role="button"
+				data-bs-toggle="dropdown"
+				aria-expanded="false"
+			>
+				<i class="fas fa-user" />
+			</a>
+			<ul class="dropdown-menu {endClass ? 'dropdown-menu-end' : ''}">
+				{#if !User}
+					<li>
+						<a class="dropdown-item" href="/login">Iniciar Sesión</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="/signup">Registrarse</a>
+					</li>
+				{/if}
+				{#if User}
+					<li>
+						<a class="dropdown-item" href="/">Perfil</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="/">Configuraciones</a>
+					</li>
+					<li>
+						<a data-sveltekit-preload-data="off" class="dropdown-item" href="/logout"
+							>Cerrar Sesión</a
+						>
+					</li>
+				{/if}
+			</ul>
+		</div>
 		<!-- Collapsible wrapper -->
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<div class="collapse navbar-collapse" id="navbarSupportedContent" >
 			<!-- Navbar brand -->
 			<a class="navbar-brand mt-2 mt-lg-0 logoNav" href="/">
 				<img
@@ -56,20 +91,20 @@
 			<!-- Left links -->
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link" href="/">Inicio</a>
+					<a class="nav-link rutaNav" href="/">Inicio</a>
 				</li>
 				{#if User}
 					<li class="nav-item">
-						<a class="nav-link" href="/reservar">Reservar</a>
+						<a class="nav-link rutaNav" href="/reservar">Reservar</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/historial">Historial</a>
+						<a class="nav-link rutaNav" href="/historial">Historial</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/testing">Testeo</a>
+						<a class="nav-link rutaNav" href="/testing">Testeo</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/productos">Gestionar Productos</a>
+						<a class="nav-link rutaNav" href="/productos">Gestionar Productos</a>
 					</li>
 				{/if}
 			</ul>
@@ -77,7 +112,7 @@
 		</div>
 		<!-- Collapsible wrapper -->
 		<!-- Right elements -->
-		<div class="right-elements">
+		<div class="right-elements {showClass ? 'noti' : ''}">
 			<div class="d-flex align-items-center">
 				<!-- SHOPPING -->
 				<!-- svelte-ignore a11y-missing-attribute -->
@@ -91,7 +126,7 @@
 					</a>
 				{/if}
 				<!-- AVATAR -->
-				<div class="dropdown">
+				<div class="dropdown defaultAvatar">
 					<!-- svelte-ignore a11y-missing-attribute -->
 					<a
 						class="text-reset me-3 dropdown-toggle hidden-arrow"

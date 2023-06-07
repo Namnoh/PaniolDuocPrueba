@@ -168,8 +168,23 @@
 
 	/* RESPONSIVE TABLET */
 	@media (min-width: 481px) and (max-width: 767px) {
+		.containerMain {
+			padding: 5% 10% 5% 10%;
+			margin-top: 10%;
+		}
+
+		textarea,
+		input,
+		select {
+			width: 100%;
+		}
 	}
 
 	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		textarea,
+		input,
+		select {
+			width: 85%;
+		}
 	}
 </style>

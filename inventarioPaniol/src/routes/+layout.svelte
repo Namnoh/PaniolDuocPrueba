@@ -1,37 +1,38 @@
 <script>
-    import Header from "./common/Header.svelte";
-    import Footer from "./common/Footer.svelte";
+	import Header from './common/Header.svelte';
+	import Footer from './common/Footer.svelte';
 
-    import "./common/headerStyles.css";
-    import "./common/mainStyles.css";
-    import "./common/footerStyles.css";
+	import './common/headerStyles.css';
+	import './common/mainStyles.css';
+	import './common/footerStyles.css';
 
-    import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import toast, { Toaster } from 'svelte-french-toast';
 
-    import { user } from '../stores';
-    export let data;
+	import { user } from '../stores';
+	export let data;
 
-    $:User = data?.authedUser;
-    if (data.authedUser) {
-        console.log(`AuthedUser: ${JSON.stringify(data.authedUser)}`)
-        // console.log(`Email: ${data.authedUser.email}`)
-    }
+	$: User = data?.authedUser;
+	if (data.authedUser) {
+		console.log(`AuthedUser: ${JSON.stringify(data.authedUser)}`);
+		// console.log(`Email: ${data.authedUser.email}`)
+	}
 
-    $:{
-        const newUser = data?.authedUser;
-        user.set(newUser);
-    }
-    console.log(`User: ${User}`)
+	$: {
+		const newUser = data?.authedUser;
+		user.set(newUser);
+	}
+	console.log(`User: ${User}`);
 </script>
-<Toaster/>
+
+<Toaster />
 
 <div class="app">
-    <Header />
+	<Header />
 
-    <main>
-        <slot />
-    </main>
+	<main>
+		<slot />
+	</main>
 
-    <Footer />
+	<Footer />
 </div>
