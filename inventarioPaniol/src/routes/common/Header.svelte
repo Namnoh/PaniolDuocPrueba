@@ -95,7 +95,7 @@
 				</li>
 				{#if User}
 					<li class="nav-item">
-						<a class="nav-link rutaNav" href="/reservar">Reservar</a>
+						<a data-sveltekit-preload-data="off" class="nav-link rutaNav" href="/reservar">Reservar</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link rutaNav" href="/historial">Historial</a>

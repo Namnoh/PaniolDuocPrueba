@@ -23,6 +23,8 @@ export const returnEmailsList = async (collection: Collection): Promise<string[]
 	return emailList;
 };
 
+
+
 export const registerUser = async (collection: Collection, user: UserWithoutId) => {
 	const register = await collection.insertOne(user);
 	return register;

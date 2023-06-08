@@ -34,7 +34,7 @@
 			</div>
 			
 			<div class="form-item">
-				<button type="submit" class="btn btn-primary boton">Restablecer Contraseña</button>
+				<button type="submit" class="btn btn-primary boton">Enviar Email</button>
 			</div>
 		</form>
 	</div>

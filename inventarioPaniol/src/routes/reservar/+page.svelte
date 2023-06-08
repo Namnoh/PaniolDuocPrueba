@@ -3,11 +3,17 @@
 	export let data;
 
 	$: ({ productos } = data);
+
+	let product;
+	function showModal(prod) {
+		product = prod;
+	}
 </script>
+
 <!-- BODY RESERVAR -->
 <div class="container">
-	<div class="row">
-		<div class="col-md-2 first-section">
+	<div class="row responsiveRow">
+		<div class="col-md first-section">
 			<div class="filtro">
 				<div class="list-group" role="tablist">
 					<a
@@ -116,26 +122,30 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row flexBoxCards">
 						<!-- 1-->
 						{#each productos as p}
-							<div class="col-md-6 col-lg-4 col-xl-3">
-								<div id="product-1" class="single-product">
+							<div class="col-md-6 col-lg-4 col-xl-3 cardFlex">
+								<div class="single-product">
 									<div class="part-1">
-										<img src={p.imgUrl}>
+										<img src={p.imgUrl} alt="Imagen del Producto" />
 										<ul>
 											<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
 											<li><a href="#"><i class="fas fa-heart" /></a></li>
 											<li><a href="#"><i class="fas fa-plus" /></a></li>
 											<li>
-												<a data-bs-toggle="modal" data-bs-target="#productoModal"
-													><i class="fas fa-expand" /></a
+												<a
+													id="expand"
+													data-bs-toggle="modal"
+													data-bs-target="#productoModal"
+													on:click={() => showModal(p)}><i class="fas fa-expand" /></a
 												>
 											</li>
 										</ul>
 									</div>
 									<div class="part-2">
 										<h3 class="product-title"><center>{p.name}</center></h3>
+										<h5 class="product-title"><center>Stock:{p.stock}</center></h5>
 									</div>
 								</div>
 							</div>
@@ -148,8 +158,6 @@
 </div>
 <!-- FIN BODY RESERVAR -->
 
-
-
 <!-- Modal de Quick View -->
 <div
 	class="modal fade"
@@ -161,31 +169,45 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="quickViewModalLabel">Vista rápida del producto</h5>
+				<h5 class="modal-title" id="quickViewModalLabel">Vista Rápida Del Producto.</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
 			</div>
-			{#each productos as p}
+			{#if product}
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-6">
-							<img
-								src={p.imgUrl} 
-								alt="Producto"
-								class="img-fluid"
-							/>
+							<img src={product.imgUrl} alt="Producto" class="img-fluid" />
+							<div>
+								<form>
+									<p class="clasificacion">
+										<input id="radio1" type="radio" name="estrellas" value="5" /><label for="radio1"
+											>★</label
+										><input id="radio2" type="radio" name="estrellas" value="4" /><label
+											for="radio2">★</label
+										><input id="radio3" type="radio" name="estrellas" value="3" /><label
+											for="radio3">★</label
+										><input id="radio4" type="radio" name="estrellas" value="2" /><label
+											for="radio4">★</label
+										><input id="radio5" type="radio" name="estrellas" value="1" /><label
+											for="radio5">★</label
+										>
+									</p>
+								</form>
+							</div>
 						</div>
 						<div class="col-md-6">
-							<h4>Nombre del producto: {p.name}</h4>
-							<p>Categoría: {p.categoria}</p>
-							<p>Stock: {p.stock}</p>
-							<button type="button" class="btn btn-primary">Agregar al carrito</button>
+							<h4>{product.name}</h4>
+							<p>Categoría: {product.categoria}</p>
+							<p>Stock: {product.stock}</p>
+							<p>Descripcion: {product.descripcion}</p>
 						</div>
 					</div>
 				</div>
-			{/each}
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-			</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					<button type="button" class="btn btn-primary">Agregar al carrito</button>
+				</div>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -193,7 +215,6 @@
 <!-- FIN MODAL -->
 
 <!-- RESERVAR CSS -->
-
 <style>
 	.section-products {
 		padding: 80px 0 54px;
@@ -271,11 +292,13 @@
 	.section-products .single-product .part-1 ul {
 		position: absolute;
 		bottom: -41px;
-		left: 20px;
+		/* left: 20px; */
+		width: 100%;
 		margin: 0;
 		padding: 0;
 		list-style: none;
 		opacity: 0;
+		text-align: center;
 		transition: bottom 0.5s, opacity 0.5s;
 	}
 
@@ -287,6 +310,7 @@
 	.section-products .single-product .part-1 ul li {
 		display: inline-block;
 		margin-right: 4px;
+		margin-top: 4px;
 	}
 
 	.section-products .single-product .part-1 ul li a {
@@ -310,10 +334,18 @@
 		font-size: 1rem;
 	}
 
-	.section-products .single-product .part-2 h4 {
-		display: inline-block;
-		font-size: 1rem;
+	.section-products .single-product .part-2 h3 {
+		font-size: 1.1rem !important;
+		text-align: center;
 	}
+	.section-products .single-product .part-2 h5 {
+		/* font-family: cursive; */
+		font-size: 0.8rem !important;
+		text-align: center;
+		color: #464545;
+		padding-bottom: 5%;
+	}
+
 	.itemTabla {
 		width: 100%;
 		height: 100%;
@@ -327,21 +359,138 @@
 		border-color: black;
 	}
 
-	@media only screen and (max-device-width: 480px) {
-		.first-section {
-			margin-top: 10%;
-		}
-	}
 	img {
 		display: flex;
 		margin: auto;
-		height: 75%;
-		max-height: 290px;
+		height: 70%;
+		max-height: 280px;
 		margin-bottom: 20px;
 		overflow: hidden;
 		transition: transform 0.3s;
 	}
-	img:hover{
+
+	img:hover {
 		transform: scale(1.1);
+	}
+
+	@media only screen and (max-device-width: 300px) {
+		.first-section {
+			margin-top: 13%;
+		}
+	}
+
+	@media only screen and (min-device-width: 301px) and (max-device-width: 480px) {
+		.section-products .single-product:hover .part-1 ul {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			
+		}
+		.first-section {
+			margin-top: 13%;
+		}
+
+		.flexBoxCards {
+			display: flex;
+		}
+
+		.cardFlex {
+			width: 50%;
+			/* height: 60% !important; */
+		}
+
+		.part-1 {
+			height: 190px !important;
+		}
+
+		.section-products .single-product .part-1 {
+			height: 220px;
+		}
+
+		img {
+			margin: auto;
+			/* width: 100%; */
+			height: 73%;
+			margin-top: 15%;
+			margin-bottom: 5%;
+		}
+
+		.section-products .single-product {
+			margin-bottom: inherit;
+			height: 100% !important;
+		}
+	}
+
+	@media (min-width: 481px) and (max-width: 767px) {
+		.first-section {
+			margin-top: 13%;
+		}
+
+		.flexBoxCards {
+			display: flex;
+		}
+
+		.cardFlex {
+			width: 50%;
+		}
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 991px) {
+		.first-section {
+			margin-top: 13%;
+		}
+
+		.flexBoxCards {
+			display: flex;
+		}
+
+		.responsiveRow {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.cardFlex {
+			width: 50%;
+		}
+	}
+
+	#form {
+		width: 250px;
+		margin: 0 auto;
+		height: 50px;
+	}
+
+	#form p {
+		text-align: center;
+	}
+
+	#form label {
+		font-size: 100px;
+	}
+
+	input[type='radio'] {
+		display: none;
+	}
+
+	label {
+		color: grey;
+	}
+
+	.clasificacion {
+		direction: rtl;
+		unicode-bidi: bidi-override;
+		font-size: 25px;
+		display: flex;
+		justify-content: center;
+	}
+
+	label:hover,
+	label:hover ~ label {
+		color: orange;
+	}
+
+	input[type='radio']:checked ~ label {
+		color: orange;
 	}
 </style>

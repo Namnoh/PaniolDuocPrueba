@@ -31,12 +31,19 @@
 			<p>Categoría: {producto.categoria}</p>
 			<p>Stock: {producto.stock}</p>
 			<p>Descripción:</p>
-			<textarea disabled name="descripcionFija" id="descripcionFija" cols="34" rows="10"
+			<textarea
+				disabled
+				name="descripcionFija"
+				id="descripcionFija"
+				cols="34"
+				rows="10"
 				class="textarea">{producto.descripcion}</textarea
 			>
 			<br /><br />
 			<div class="buttons">
-				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Modificar</button>
+				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"
+					>Modificar</button
+				>
 				<div class="deleteForm">
 					<form action="?/eliminar&id={producto.id}" method="POST">
 						<button type="submit" class="btn btn-danger">Eliminar</button>
@@ -59,7 +66,9 @@
 		<div class="modal-content">
 			<!-- Contenido del modal -->
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Detalle del producto: {producto.id} | {producto.nameD}</h5>
+				<h5 class="modal-title" id="exampleModalLabel">
+					Detalle del producto: {producto.id} | {producto.nameD}
+				</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
 			</div>
 			<div class="modal-body">
@@ -129,7 +138,8 @@
 										name="descripcion"
 										cols="30"
 										rows="10"
-										class="textareaModal"/></td
+										class="textareaModal"
+									/></td
 								>
 							</tr>
 							<tr>
@@ -166,7 +176,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 90vh;
+		min-height: 90vh;
 	}
 
 	.containerMain {
@@ -177,11 +187,11 @@
 		padding: 3%;
 		border-radius: 20px;
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-		width: 80%;
+		width: 90%;
 	}
 
 	.img {
-		width: 40%;
+		width: 50%;
 	}
 
 	img {
@@ -300,5 +310,87 @@
 
 	td {
 		width: 50%;
+	}
+
+	@media only screen and (max-device-width: 480px) {
+		.containerMain {
+			margin-top: 15%;
+			flex-direction: column;
+			width: 100%;
+			margin-bottom: 15%;
+			/* display: inherit; */
+		}
+
+		.img {
+			width: 100%;
+		}
+
+		.descrip {
+			text-align: center;
+			width: 100%;
+			padding-top: 5%;
+		}
+
+		.textarea {
+			text-align: center;
+			width: 80%;
+		}
+
+		.buttons {
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-around;
+		}
+
+		button {
+			margin-bottom: 5%;
+		}
+	}
+
+	@media (min-width: 481px) and (max-width: 767px) {
+		.containerMain {
+			margin-top: 15%;
+			flex-direction: column;
+			width: 100%;
+			margin-bottom: 15%;
+			/* display: inherit; */
+		}
+
+		.img {
+			width: 80%;
+		}
+
+		.descrip {
+			text-align: center;
+			width: 100%;
+			padding-top: 5%;
+		}
+
+		.textarea {
+			text-align: center;
+			width: 80%;
+		}
+
+		.buttons {
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-around;
+		}
+
+		button {
+			margin-bottom: 5%;
+		}
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 991px) {
+		.containerMain {
+			margin-top: 15%;
+			width: 100%;
+			margin-bottom: 15%;
+		}
+
+		.textarea {
+			width: 100%;
+		}
 	}
 </style>

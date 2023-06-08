@@ -52,7 +52,7 @@
 	}
 
 	if (form && form.password) {
-		passReview(null,form.password);
+		passReview(null, form.password);
 	}
 </script>
 
@@ -80,7 +80,110 @@
 				/>
 			</div>
 			<div class="form-item form-pass">
-				<label for="password">Contraseña<sup><small>*</small></sup></label>
+				<div class="passLabel">
+					<label for="password">Contraseña<sup><small>*</small></sup></label>
+					<div class="hover-text">
+						<img
+							src="https://img.icons8.com/?size=512&id=82742&format=png"
+							alt="Ícono de Información - ICONS8"
+							width="100%"
+						/>
+						<span class="tooltip-text" id="fade"
+							><div class="passContraints">
+								<small class="pass" style={opacity1 ? 'color: rgba(255, 255, 255, 0.5)' : ''}>
+									<svg
+										width="8"
+										height="8"
+										viewBox="0 0 8 8"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<circle
+											cx="4"
+											cy="4"
+											r="4"
+											fill="#001B35"
+											fill-opacity={opacity1 ? '0.2' : ''}
+										/>
+									</svg>
+									8 Carácteres como mínimo.
+								</small>
+								<small class="pass" style={opacity2 ? 'color: rgba(255, 255, 255, 0.5)' : ''}>
+									<svg
+										width="8"
+										height="8"
+										viewBox="0 0 8 8"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<circle
+											cx="4"
+											cy="4"
+											r="4"
+											fill="#001B35"
+											fill-opacity={opacity2 ? '0.2' : ''}
+										/>
+									</svg>
+									Un carácter en minúsculas.
+								</small>
+								<small class="pass" style={opacity3 ? 'color: rgba(255, 255, 255, 0.5)' : ''}>
+									<svg
+										width="8"
+										height="8"
+										viewBox="0 0 8 8"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<circle
+											cx="4"
+											cy="4"
+											r="4"
+											fill="#001B35"
+											fill-opacity={opacity3 ? '0.2' : ''}
+										/>
+									</svg>
+									Un número o carácter especial.
+								</small>
+								<small class="pass" style={opacity4 ? 'color: rgba(255, 255, 255, 0.5)' : ''}>
+									<svg
+										width="8"
+										height="8"
+										viewBox="0 0 8 8"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<circle
+											cx="4"
+											cy="4"
+											r="4"
+											fill="#001B35"
+											fill-opacity={opacity4 ? '0.2' : ''}
+										/>
+									</svg>
+									Una carácter en mayúsculas.
+								</small>
+								<small class="pass" style={opacity5 ? 'color: rgba(255, 255, 255, 0.5)' : ''}>
+									<svg
+										width="8"
+										height="8"
+										viewBox="0 0 8 8"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<circle
+											cx="4"
+											cy="4"
+											r="4"
+											fill="#001B35"
+											fill-opacity={opacity5 ? '0.2' : ''}
+										/>
+									</svg>
+									3 o más carácteres especiales y/o números.
+								</small>
+							</div>
+						</span>
+					</div>
+				</div>
 				<input
 					class:fieldError={form?.weakPassword}
 					value={form?.password ?? ''}
@@ -90,68 +193,6 @@
 					on:input={passReview}
 					required
 				/>
-			</div>
-			<div class="passContraints">
-				<small class="pass" style={opacity1 ? 'color: #D4D4D7' : ''}>
-					<svg
-						width="8"
-						height="8"
-						viewBox="0 0 8 8"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity1 ? '0.2' : ''} />
-					</svg>
-					8 Carácteres como mínimo.
-				</small>
-				<small class="pass" style={opacity2 ? 'color: #D4D4D7' : ''}>
-					<svg
-						width="8"
-						height="8"
-						viewBox="0 0 8 8"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity2 ? '0.2' : ''} />
-					</svg>
-					Un carácter en minúsculas.
-				</small>
-				<small class="pass" style={opacity3 ? 'color: #D4D4D7' : ''}>
-					<svg
-						width="8"
-						height="8"
-						viewBox="0 0 8 8"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity3 ? '0.2' : ''} />
-					</svg>
-					Un número o carácter especial.
-				</small><br />
-				<small class="pass" style={opacity4 ? 'color: #D4D4D7' : ''}>
-					<svg
-						width="8"
-						height="8"
-						viewBox="0 0 8 8"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity4 ? '0.2' : ''} />
-					</svg>
-					Una carácter en mayúsculas.
-				</small>
-				<small class="pass" style={opacity5 ? 'color: #D4D4D7' : ''}>
-					<svg
-						width="8"
-						height="8"
-						viewBox="0 0 8 8"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<circle cx="4" cy="4" r="4" fill="#F8C651" fill-opacity={opacity5 ? '0.2' : ''} />
-					</svg>
-					3 o más carácteres especiales y/o números.
-				</small>
 			</div>
 			<div class="form-item">
 				<label for="password2">Repita la Contraseña<sup><small>*</small></sup></label>
@@ -176,6 +217,11 @@
 			<div class="form-item">
 				<button type="submit" class="btn btn-primary">Registrarse</button>
 			</div>
+
+			<!-- <div class="hover-text">
+				hover me
+				
+			</div> -->
 		</form>
 	</div>
 </div>
@@ -201,7 +247,7 @@
 	input {
 		border: none;
 		padding: 10px;
-		width: 50%;
+		width: 60%;
 		margin-bottom: 10px;
 		box-sizing: border-box;
 		/* background-color: #f2f2f2; */
@@ -239,7 +285,10 @@
 	}
 
 	.passContraints {
+		display: flex;
+		flex-wrap: wrap;
 		margin-bottom: 2%;
+		justify-content: flex-start;
 	}
 
 	.form-pass {
@@ -247,11 +296,86 @@
 	}
 
 	.pass {
-		color: black;
+		text-align: left;
+		color: rgb(255, 255, 255);
+	}
+
+	.passLabel {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+	}
+
+	.tooltip-text {
+		position: absolute;
+		/* top: 40px; */
+		/* left: 50%; */
+		z-index: 2;
+		width: 15%;
+		font-size: 1rem;
+		background-color: var(--color-primary);
+		border-radius: 10px;
+		padding: 10px 15px 10px 15px;
+	}
+
+	#fade {
+		display: none;
+	}
+
+	.hover-text:hover #fade {
+		display: initial;
+	}
+
+	.hover-text {
+		margin-left: 1%;
+		width: 20px;
 	}
 
 	/* RESPONSIVE CELULAR */
 	@media only screen and (max-device-width: 480px) {
+		.containerMain {
+			padding: 5% 10% 5% 10%;
+			margin-top: 15%;
+		}
+
+		input {
+			width: 100%;
+		}
+
+		.tooltip-text {
+			top: 51vh;
+			left: 40%;
+			width: 50%;
+		}
+
+		.hover-text {
+			margin-left: 2%;
+		}
+	}
+
+	/* RESPONSIVE TABLET */
+	@media (min-width: 481px) and (max-width: 767px) {
+		.containerMain {
+			padding: 5% 10% 5% 10%;
+			margin-top: 15%;
+		}
+
+		input {
+			width: 100%;
+		}
+
+		.tooltip-text {
+			top: 54%;
+			left: 40%;
+			width: 40%;
+		}
+
+		.hover-text {
+			margin-left: 2%;
+		}
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 991px) {
 		.containerMain {
 			padding: 5% 10% 5% 10%;
 			margin-top: 10%;
@@ -260,12 +384,21 @@
 		input {
 			width: 100%;
 		}
+
+		.tooltip-text {
+			top: 51vh;
+			left: 40%;
+			width: 40%;
+		}
 	}
 
-	/* RESPONSIVE TABLET */
-	@media (min-width: 481px) and (max-width: 767px) {
-	}
+	@media only screen and (min-device-width: 992px) and (max-device-width: 1200px) {
+		input {
+			width: 70%;
+		}
 
-	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		.tooltip-text {
+			width: 25%;
+		}
 	}
 </style>
