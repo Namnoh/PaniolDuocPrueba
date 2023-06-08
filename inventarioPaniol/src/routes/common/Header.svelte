@@ -54,7 +54,7 @@
 			>
 				<i class="fas fa-user" />
 			</a>
-			<ul class="dropdown-menu">
+			<ul class="dropdown-menu dropdown-menu-end">
 				{#if !User}
 					<li>
 						<a class="dropdown-item" href="/login">Iniciar Sesión</a>
