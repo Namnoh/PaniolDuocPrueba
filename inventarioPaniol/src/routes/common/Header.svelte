@@ -60,13 +60,15 @@
 				{#if !User}
 					<li>
 						<a
-							class="dropdown-item"
-							href="/login"
-							style={$page.url.pathname === '/login' ? 'font-weight: bold' : ''}>Iniciar Sesión</a
+							class="dropdown-item {$page.url.pathname === '/login' ? 'currentNavStyle' : ''}"
+							href="/login">Iniciar Sesión</a
 						>
 					</li>
 					<li>
-						<a class="dropdown-item" href="/signup">Registrarse</a>
+						<a
+							class="dropdown-item {$page.url.pathname === '/signup' ? 'currentNavStyle' : ''}"
+							href="/signup">Registrarse</a
+						>
 					</li>
 				{/if}
 				{#if User}
@@ -164,17 +166,17 @@
 						{#if !User}
 							<li>
 								<a
-									class="dropdown-item"
+									class="dropdown-item {$page.url.pathname === '/login' ? 'currentNavStyle' : ''}"
 									href="/login"
-									style={$page.url.pathname === '/login' ? 'font-weight: bold!important' : ''}
+									
 									>Iniciar Sesión</a
 								>
 							</li>
 							<li>
 								<a
-									class="dropdown-item"
+									class="dropdown-item {$page.url.pathname === '/signup' ? 'currentNavStyle' : ''}"
 									href="/signup"
-									style={$page.url.pathname === '/signup' ? 'font-weight: bold!important' : ''}
+									
 									>Registrarse</a
 								>
 							</li>
