@@ -3,6 +3,8 @@
 	$: User = $user;
 	// console.log(`HEADER | User: ${User}`)
 
+	import { page } from '$app/stores';
+
 	let showClass = true;
 	let endClass = true;
 
@@ -57,7 +59,11 @@
 			<ul class="dropdown-menu dropdown-menu-end">
 				{#if !User}
 					<li>
-						<a class="dropdown-item" href="/login">Iniciar Sesión</a>
+						<a
+							class="dropdown-item"
+							href="/login"
+							style={$page.url.pathname === '/login' ? 'font-weight: bold' : ''}>Iniciar Sesión</a
+						>
 					</li>
 					<li>
 						<a class="dropdown-item" href="/signup">Registrarse</a>
@@ -79,7 +85,7 @@
 			</ul>
 		</div>
 		<!-- Collapsible wrapper -->
-		<div class="collapse navbar-collapse" id="navbarSupportedContent" >
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<!-- Navbar brand -->
 			<a class="navbar-brand mt-2 mt-lg-0 logoNav" href="/">
 				<img
@@ -91,20 +97,38 @@
 			<!-- Left links -->
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link rutaNav" href="/">Inicio</a>
+					<a class="nav-link rutaNav {$page.url.pathname === '/' ? 'currentNavStyle' : ''}" href="/"
+						>Inicio</a
+					>
 				</li>
 				{#if User}
 					<li class="nav-item">
-						<a data-sveltekit-preload-data="off" class="nav-link rutaNav" href="/reservar">Reservar</a>
+						<a
+							class="nav-link rutaNav {$page.url.pathname === '/reservar' ? 'currentNavStyle' : ''}"
+							href="/reservar">Reservar</a
+						>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link rutaNav" href="/historial">Historial</a>
+						<a
+							class="nav-link rutaNav {$page.url.pathname === '/historial'
+								? 'currentNavStyle'
+								: ''}"
+							href="/historial">Historial</a
+						>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link rutaNav" href="/testing">Testeo</a>
+						<a
+							class="nav-link rutaNav {$page.url.pathname === '/testing' ? 'currentNavStyle' : ''}"
+							href="/testing">Testeo</a
+						>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link rutaNav" href="/productos">Gestionar Productos</a>
+						<a
+							class="nav-link rutaNav {$page.url.pathname === '/productos'
+								? 'currentNavStyle'
+								: ''}"
+							href="/productos">Gestionar Productos</a
+						>
 					</li>
 				{/if}
 			</ul>
@@ -139,10 +163,20 @@
 					<ul class="dropdown-menu {endClass ? 'dropdown-menu-end' : ''}">
 						{#if !User}
 							<li>
-								<a class="dropdown-item" href="/login">Iniciar Sesión</a>
+								<a
+									class="dropdown-item"
+									href="/login"
+									style={$page.url.pathname === '/login' ? 'font-weight: bold!important' : ''}
+									>Iniciar Sesión</a
+								>
 							</li>
 							<li>
-								<a class="dropdown-item" href="/signup">Registrarse</a>
+								<a
+									class="dropdown-item"
+									href="/signup"
+									style={$page.url.pathname === '/signup' ? 'font-weight: bold!important' : ''}
+									>Registrarse</a
+								>
 							</li>
 						{/if}
 						{#if User}
@@ -174,7 +208,6 @@
 							<span class="badge rounded-pill badge-notification bg-danger">+99</span>
 						</a>
 						<ul class="dropdown-menu {endClass ? 'dropdown-menu-end' : ''} notifications">
-							<!-- <li><a class="dropdown-item" href="">ALDSFKLASHDF SKJDFHASL ASDF ASDF AAA SADF ASF ASD FAS DF ASDF AS DF ASDF ASD FAS DFAS DFAS</a></li> -->
 							<li><a class="dropdown-item" href="/">Alfredo Galdames ha reservado un item.</a></li>
 							<hr />
 							<li>

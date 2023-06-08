@@ -10,7 +10,7 @@ a:hover {
 }
 
 .rutaNav:hover {
-	color: #333!important;
+	color: #F8B31C!important;
 	font-weight: bold!important;
 	transition: none 0.16s ease-in-out!important;
 }
@@ -21,6 +21,12 @@ a:hover {
 
 .avatarSm {
 	display: none;
+}
+
+.currentNavStyle {
+	color: #1a1a1a!important;
+	font-weight: bold!important;
+	text-decoration: overline;
 }
 
 @media only screen and (max-device-width: 991px) {

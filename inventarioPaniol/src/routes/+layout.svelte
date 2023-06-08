@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Header from './common/Header.svelte';
 	import Footer from './common/Footer.svelte';
 
@@ -6,7 +6,6 @@
 	import './common/mainStyles.css';
 	import './common/footerStyles.css';
 
-	import { onMount } from 'svelte';
 	import toast, { Toaster } from 'svelte-french-toast';
 
 	import { user } from '../stores';
