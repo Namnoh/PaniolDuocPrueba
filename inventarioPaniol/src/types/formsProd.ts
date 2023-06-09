@@ -1,5 +1,5 @@
 export interface registerFormData {
-    emailUsed: boolean,
+    nameUsed: boolean,
     error:boolean,
     message: string,
     id: number

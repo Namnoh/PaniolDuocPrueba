@@ -20,7 +20,7 @@ export const returnNamesList = async (collection: Collection): Promise<string[]>
 export const findProdByIdAllData = async (collection: Collection, id: number) => {
 	const projection = { _id: 0 };
 	const Prod = await collection.find({ id: id }).project(projection).toArray();
-	console.log('Prod Find Result', Prod[0]);
+	// console.log('Prod Find Result', Prod[0]);
 	if (Prod[0] != undefined) {
 		return JSON.parse(
 			JSON.stringify(Prod[0], (key, value) => (key === '_id' ? value.toString(value) : value))
@@ -35,7 +35,7 @@ export const registerProd = async (collection: Collection, prod: ProductosWithou
 	return register;
 };
 
-export const registerFormToUserWithoutId = async (
+export const registerFormToProdWithoutId = async (
 	form: registerFormData
 ): Promise<ProductosWithoutId> => {
 	const prod = {
@@ -54,3 +54,10 @@ export const delProd = async (id: number) => {
 	const del = await Productos.deleteOne({id : id});
 	return true;
 }
+
+export const updateProd = async (filter, prod) => {
+	prod = await { $set: prod };
+	const result = await Productos.updateOne(filter, prod);
+	console.log(`RESULT BACKEND: ${JSON.stringify(result)}`)
+	return result;
+};

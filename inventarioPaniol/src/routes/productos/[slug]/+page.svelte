@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	export let data;
 	let producto = data;
-
-	// console.log(producto);
 
 	export let form;
 
@@ -12,9 +12,91 @@
 	}
 
 	let cat;
-
 	if (form && form.categoria) {
 		cat = form.categoria;
+	} else {
+		cat = producto.categoria;
+	}
+
+	let modal;
+	let bootstrapModal;
+	onMount(async () => {
+		await import('bootstrap').then(({ Modal }) => {
+			bootstrapModal = new Modal(modal);
+		});
+		if (form && form.error) {
+			bootstrapModal?.show();
+		}
+	});
+
+	let disabled = true;
+	let changes = [false, false, false, false, false];
+	let chg = false;
+	let count;
+	function handleModificarBtn(event) {
+		let inputId = event.srcElement.id;
+		let inputValue = event.srcElement.value;
+		let name = producto[inputId];
+
+		switch (inputId) {
+			case 'name':
+				if (inputValue !== name) {
+					changes[0] = true;
+				} else {
+					changes[0] = false;
+				}
+				break;
+			case 'stock':
+				if (parseInt(inputValue) !== parseInt(name)) {
+					changes[1] = true;
+				} else {
+					changes[1] = false;
+				}
+				break;
+			case 'categoria':
+				if (inputValue !== name) {
+					changes[2] = true;
+				} else {
+					changes[2] = false;
+				}
+				break;
+			case 'imgUrl':
+				if (inputValue !== name && inputValue != '') {
+					changes[3] = true;
+				} else {
+					changes[3] = false;
+				}
+				break;
+			case 'descripcion':
+				if (inputValue !== name) {
+					changes[4] = true;
+				} else {
+					changes[4] = false;
+				}
+				break;
+			default:
+				console.log('Error, input no identificado.');
+				break;
+		}
+
+		count = 0;
+		for (let i = 0; i < changes.length; i++) {
+			let element = changes[i];
+			if (element) {
+				count += 1;
+			}
+		}
+		// console.log(`TRUES: ${count} | FALSES: ${5 - count}`);
+		count > 0 ? (chg = true) : (chg = false);
+		// console.log(`CHG: ${chg}`);
+
+		if (chg) {
+			disabled = false;
+		} else {
+			disabled = true;
+		}
+		// console.log(`Changes: ${JSON.stringify(changes)} | COUNT: ${count}`);
+		// console.log(`DISABLED: ${disabled}`);
 	}
 </script>
 
@@ -57,6 +139,7 @@
 <!-- MODAL -->
 <div
 	class="modal"
+	bind:this={modal}
 	id="myModal"
 	tabindex="-1"
 	aria-labelledby="exampleModalLabel"
@@ -67,104 +150,118 @@
 			<!-- Contenido del modal -->
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">
-					Detalle del producto: {producto.id} | {producto.nameD}
+					Detalle del producto: {producto.id} | {producto.name}
 				</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
 			</div>
 			<div class="modal-body">
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<tbody>
-							<tr>
-								<th>Id Producto:</th>
-								<td style="text-align: center;">{producto.id}</td>
-							</tr>
-							<tr>
-								<th>Nombre del producto:</th>
-								<td
-									><input value={form?.name ?? ''} id="name" type="text" name="name" required />
-								</td>
-							</tr>
-							<tr>
-								<th>Stock:</th>
-								<td
-									><input
-										value={form?.stock ?? ''}
-										id="stock"
-										type="number"
-										name="stock"
-										required
-									/></td
-								>
-							</tr>
-							<tr>
-								<th>Categoría:</th>
-								<td
-									><select id="categoria" name="categoria" required>
-										<option value="Deportes" selected={cat === 'Deportes'}>Deportes</option>
-										<option value="Tecnología" selected={cat === 'Tecnología'}>Tecnología</option>
-										<option value="Redes" selected={cat === 'Redes'}>Redes</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th>Imagen:</th>
-								<td
-									><input
-										value={form?.imgUrl ?? ''}
-										id="imgUrl"
-										type="url"
-										name="imgUrl"
-										on:input={imgPreview}
-										required
-									/></td
-								>
-								<!-- bind:this={fechaInput} -->
-								<!-- on:change={nuevaFecha} -->
-							</tr>
-							{#if url}
+				<form action="?/actualizar" method="POST">
+					<div class="table-responsive">
+						<table class="table table-striped">
+							<tbody>
 								<tr>
-									<th>Preview de la Imagen:</th>
-									<td><img src={url} alt="El enlace no es correcto." width="200" height="200" /></td
+									<th>Id Producto:</th>
+									<td style="text-align: center;">{producto.id}</td>
+								</tr>
+								<tr>
+									<th>Nombre del producto:</th>
+									<td
+										><input
+											value={form?.name ?? producto.name}
+											id="name"
+											type="text"
+											name="name"
+											on:keyup={handleModificarBtn}
+											required
+										/>
+									</td>
+								</tr>
+								<tr>
+									<th>Stock:</th>
+									<td
+										><input
+											value={form?.stock ?? producto.stock}
+											id="stock"
+											type="number"
+											name="stock"
+											on:keyup={handleModificarBtn}
+											required
+										/></td
 									>
 								</tr>
-							{/if}
-							<tr>
-								<th>Descripción:</th>
-								<td
-									><textarea
-										value={form?.descripcion ?? ''}
-										id="descripcion"
-										name="descripcion"
-										cols="30"
-										rows="10"
-										class="textareaModal"
-									/></td
-								>
-							</tr>
-							<tr>
-								{#if form?.error}
-									<small>{form?.message}</small>
+								<tr>
+									<th>Categoría:</th>
+									<td
+										><select
+											id="categoria"
+											name="categoria"
+											on:change={handleModificarBtn}
+											required
+										>
+											<option value="Deportes" selected={cat === 'Deportes'}>Deportes</option>
+											<option value="Tecnología" selected={cat === 'Tecnología'}>Tecnología</option>
+											<option value="Redes" selected={cat === 'Redes'}>Redes</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>Imagen:</th>
+									<td
+										><input
+											value={form?.imgUrl ?? ''}
+											id="imgUrl"
+											type="url"
+											name="imgUrl"
+											on:input={imgPreview}
+											on:keyup={handleModificarBtn}
+										/></td
+									>
+								</tr>
+								{#if url}
+									<tr>
+										<th>Preview de la Imagen:</th>
+										<td
+											><img
+												src={url}
+												alt="El enlace no es correcto."
+												width="200"
+												height="200"
+											/></td
+										>
+									</tr>
 								{/if}
-							</tr>
-						</tbody>
-					</table>
-					<br />
-					<br />
-					<input
-						type="button"
-						class="btn btn-success"
-						id="modificarBtn"
-						value="Modificar"
-						disabled
-					/>
-					<!-- bind:this={modificarBtn} -->
-					<!-- on:click={modificarAlert} -->
-				</div>
+								<tr>
+									<th>Descripción:</th>
+									<td
+										><textarea
+											value={form?.descripcion ?? producto.descripcion}
+											id="descripcion"
+											name="descripcion"
+											cols="30"
+											rows="10"
+											class="textareaModal"
+											on:keyup={handleModificarBtn}
+										/></td
+									>
+								</tr>
+							</tbody>
+						</table>
+						<div class="errorMsg">
+							{#if form?.error}
+								<small>{form?.message}</small>
+							{/if}
+						</div>
+						<div class="modificarBtn">
+							<button type="submit" class="btn btn-success" id="modificarBtn" {disabled}
+								>Guardar</button
+							>
+						</div>
+					</div>
+				</form>
 			</div>
-			<div class="modal-footer">
+			<!-- <div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>
@@ -261,13 +358,6 @@
 	}
 
 	/* STYLES PARA EL FORM */
-	.form-item {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
 	.textareaModal,
 	input,
 	select {
@@ -295,21 +385,35 @@
 		background-color: #002952;
 	}
 
-	label {
-		margin-bottom: 0.5em;
-	}
-
-	small {
-		padding-left: 0.5em;
-		color: #ff0000;
-	}
-
 	.fieldError {
 		outline: 2px solid #ff0000;
 	}
 
 	td {
 		width: 50%;
+	}
+
+	.modificarBtn {
+		text-align: right;
+	}
+
+	.errorMsg {
+		display: flex;
+		justify-content: center;
+		text-align: center;
+		margin-bottom: 1rem;
+	}
+
+	.errorMsg small {
+		color: #ff0000;
+	}
+
+	.modal-dialog {
+		max-width: 700px;
+	}
+
+	.modal-content {
+		width: 100%;
 	}
 
 	@media only screen and (max-device-width: 480px) {
@@ -344,6 +448,10 @@
 
 		button {
 			margin-bottom: 5%;
+		}
+
+		.modal-dialog {
+			margin-top: 15%;
 		}
 	}
 
@@ -380,6 +488,10 @@
 		button {
 			margin-bottom: 5%;
 		}
+
+		.modal-dialog {
+			margin-top: 15%;
+		} 
 	}
 
 	@media only screen and (min-device-width: 768px) and (max-device-width: 991px) {
@@ -391,6 +503,11 @@
 
 		.textarea {
 			width: 100%;
+		}
+
+		.modal-dialog {
+			max-width: 80%;
+			margin-top: 10%;
 		}
 	}
 </style>

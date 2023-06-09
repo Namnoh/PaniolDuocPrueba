@@ -145,7 +145,7 @@
 									</div>
 									<div class="part-2">
 										<h3 class="product-title"><center>{p.name}</center></h3>
-										<h5 class="product-title"><center>Stock:{p.stock}</center></h5>
+										<h5 class="product-title"><center>Stock: {p.stock}</center></h5>
 									</div>
 								</div>
 							</div>
@@ -377,6 +377,9 @@
 		.first-section {
 			margin-top: 13%;
 		}
+		.modal-dialog {
+			margin-top: 20%;
+		}
 	}
 
 	@media only screen and (min-device-width: 301px) and (max-device-width: 480px) {
@@ -384,7 +387,6 @@
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
-			
 		}
 		.first-section {
 			margin-top: 13%;

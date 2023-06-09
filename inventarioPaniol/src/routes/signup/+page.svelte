@@ -343,7 +343,7 @@
 		}
 
 		.tooltip-text {
-			top: 51vh;
+			/* top: 51vh; */
 			left: 40%;
 			width: 50%;
 		}
@@ -365,7 +365,7 @@
 		}
 
 		.tooltip-text {
-			top: 54%;
+			/* top: 54%; */
 			left: 40%;
 			width: 40%;
 		}
@@ -386,7 +386,7 @@
 		}
 
 		.tooltip-text {
-			top: 51vh;
+			/* top: 51vh; */
 			left: 40%;
 			width: 40%;
 		}

@@ -69,7 +69,8 @@
 		text-align: center;
 		margin: 0 0 5% 1%;
 		width: 300px;
-		height: 400px;
+		height: 350px;
+		flex-basis: 19%;
 	}
 
 	.card-body {
@@ -89,7 +90,7 @@
 		margin: auto;
 		height: 75%;
 		width: 70%;
-		max-height: 180px;
+		max-height: 150px;
 		margin-bottom: 20px;
 		overflow: hidden;
 		margin-top: 20px;
@@ -126,6 +127,7 @@
 			width: 48%;
 			height: 325px;
 			margin: 0 0 5% 0;
+			flex-basis: unset;
 		}
 
 		.card-text {
@@ -156,6 +158,7 @@
 			width: 48%;
 			height: 350px;
 			margin: 0 0 5% 0;
+			flex-basis: unset;
 		}
 
 		.card-text {
@@ -180,6 +183,7 @@
 		}
 		.card {
 			margin: 0 0 5% 0;
+			flex-basis: unset;
 		}
 	}
 </style>

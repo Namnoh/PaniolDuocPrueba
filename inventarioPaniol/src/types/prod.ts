@@ -3,8 +3,7 @@ import type { ObjectId } from 'mongodb';
 export interface Productos {
 	_id: ObjectId | string;
 	id: number;
-	stockTotal: number;
-	stockReservado: number;
+	stock: number;
 	categoria: string;
 	imgUrl: string;
 	descripcion: string

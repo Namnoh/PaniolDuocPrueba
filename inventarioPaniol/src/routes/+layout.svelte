@@ -21,7 +21,7 @@
 		const newUser = data?.authedUser;
 		user.set(newUser);
 	}
-	console.log(`User: ${User}`);
+	// console.log(`User: ${User}`);
 </script>
 
 <Toaster />

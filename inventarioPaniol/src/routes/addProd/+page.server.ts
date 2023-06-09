@@ -2,7 +2,7 @@ import { Productos } from '$db/collections';
 import { Actions, RequestEvent, ActionFailure, Redirect } from '@sveltejs/kit';
 import { fail, redirect } from '@sveltejs/kit';
 import { registerFormData } from '../../types/formsProd';
-import { returnNamesList, findProdByIdAllData, registerProd, registerFormToUserWithoutId, returnAllIds } from '../../prodBackendUtils';
+import { returnNamesList, findProdByIdAllData, registerProd, registerFormToProdWithoutId, returnAllIds } from '../../prodBackendUtils';
 
 export const actions: Actions = {
     addProd: async({
@@ -16,7 +16,7 @@ export const actions: Actions = {
         const descripcion = registrarFormData.get('descripcion') ?? '';
 
         let RegistrarResponse: registerFormData = {
-            emailUsed: false,
+            nameUsed: false,
 			error: false,
 			success: false,
 			message: '',
@@ -35,7 +35,7 @@ export const actions: Actions = {
 			nameList = await returnNamesList(collection);
 			if (nameList.includes(name.toString())) {
 				RegistrarResponse.error = true;
-				RegistrarResponse.emailUsed = true;
+				RegistrarResponse.nameUsed = true;
 				RegistrarResponse.message = '¡Este nombre de producto ya está en uso!';
 				return fail(400, RegistrarResponse);
 			}
@@ -69,7 +69,7 @@ export const actions: Actions = {
 			return fail(500, RegistrarResponse);
 		}
 
-		const prodToInsert = await registerFormToUserWithoutId(RegistrarResponse);
+		const prodToInsert = await registerFormToProdWithoutId(RegistrarResponse);
 		const resultOfInsert = await registerProd(collection, prodToInsert);
 		if (resultOfInsert.acknowledged && resultOfInsert.insertedId) {
 			// console.log(resultOfInsert);

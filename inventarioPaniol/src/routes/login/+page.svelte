@@ -7,7 +7,6 @@
 	import { onMount } from 'svelte';
 	import toast, { Toaster } from 'svelte-french-toast';
 
-
 	$: clearUser = data?.clearUser;
 
 	$: {
@@ -17,35 +16,34 @@
 	let loading = false;
 
 	const submitlogin = () => {
-	loading = true;
-	return async ({ result, update }) => {
-		await update();
+		loading = true;
+		return async ({ result, update }) => {
+			await update();
 
-		if (result.type === 'success') {
-			toast.success('¡Identificación satisfactoria!');
-			return;
-		}
-		loading = false;
+			if (result.type === 'success') {
+				toast.success('¡Identificación satisfactoria!');
+				return;
+			}
+			loading = false;
+		};
 	};
-};
-
 </script>
 
-<Toaster/>
+<Toaster />
 <div class="container">
 	<div class="containerMain">
-        <br><br>
+		<br /><br />
 		<h2>LOGIN</h2>
 		<hr />
 		<br />
 		<form use:enhance method="post" action="?/login" use:enhance={submitlogin}>
 			<div class="form-item">
 				<label for="email">Email<sup><small class="required">*</small></sup></label>
-				<input  value={form?.email ?? ''} id="email" type="email" name="email" required/>
+				<input value={form?.email ?? ''} id="email" type="email" name="email" required />
 			</div>
 			<div class="form-item">
 				<label for="password">Password<sup><small class="required">*</small></sup></label>
-				<input   id="password" type="password" name="password" required  />
+				<input id="password" type="password" name="password" required />
 			</div>
 
 			<div class="form-item">
@@ -54,21 +52,24 @@
 				{/if}
 			</div>
 
-            <br>
+			<br />
 
 			<div class="form-item">
 				<button type="submit" class="btn btn-primary" on:click={submitlogin}>Login</button>
 			</div>
 
-            <br>
+			<br />
 
 			<div class="form-item">
 				<a class="reset-link" href="/forgot">¿Olvidaste tu contraseña?</a>
 			</div>
+			<br />
+			<div class="form-item">
+				<a href="/signup">¿No tienes cuenta? Regístrate</a>
+			</div>
 		</form>
 	</div>
 </div>
-
 
 <style>
 	.containerMain {
@@ -123,11 +124,15 @@
 		color: #ff0000;
 	}
 
+	a:hover {
+		text-decoration: underline;
+	}
+
 	/* RESPONSIVE CELULAR */
 	@media only screen and (max-device-width: 480px) {
 		.containerMain {
 			padding: 5% 10% 5% 10%;
-			margin-top: 10%;
+			margin-top: 15%;
 		}
 
 		input {
@@ -137,8 +142,24 @@
 
 	/* RESPONSIVE TABLET */
 	@media (min-width: 481px) and (max-width: 767px) {
+		.containerMain {
+			padding: 5% 10% 5% 10%;
+			margin-top: 15%;
+		}
+
+		input {
+			width: 100%;
+		}
 	}
 
-	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+	@media only screen and (min-device-width: 768px) and (max-device-width: 991px) {
+		.containerMain {
+			padding: 5% 10% 5% 10%;
+			margin-top: 15%;
+		}
+
+		input {
+			width: 100%;
+		}
 	}
 </style>
