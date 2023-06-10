@@ -81,7 +81,7 @@ export const actions: Actions = {
 		const resultOfInsert = await updateProd(filter, prodToInsert);
 		// console.log(resultOfInsert.modifiedCount);
 		if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount > 0) {
-			throw redirect(303, `/productos/${RegistrarResponse.id}`);
+			throw redirect(303, `/productos/${productAllData.id}`);
 		} else if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount == 0) {
 			RegistrarResponse.imgUrl = '';
 			RegistrarResponse.error = true;

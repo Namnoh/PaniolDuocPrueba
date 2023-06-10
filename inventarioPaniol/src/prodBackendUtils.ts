@@ -58,6 +58,6 @@ export const delProd = async (id: number) => {
 export const updateProd = async (filter, prod) => {
 	prod = await { $set: prod };
 	const result = await Productos.updateOne(filter, prod);
-	console.log(`RESULT BACKEND: ${JSON.stringify(result)}`)
+	// console.log(`RESULT BACKEND: ${JSON.stringify(result)}`)
 	return result;
 };

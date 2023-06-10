@@ -9,6 +9,7 @@
 	import toast, { Toaster } from 'svelte-french-toast';
 
 	import { user } from '../stores';
+	import { onMount } from 'svelte';
 	export let data;
 
 	$: User = data?.authedUser;

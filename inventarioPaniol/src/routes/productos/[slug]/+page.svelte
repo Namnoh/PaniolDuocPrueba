@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	export let data;
 	let producto = data;
@@ -18,15 +18,29 @@
 		cat = producto.categoria;
 	}
 
-	let modal;
-	let bootstrapModal;
-	onMount(async () => {
-		await import('bootstrap').then(({ Modal }) => {
-			bootstrapModal = new Modal(modal);
-		});
-		if (form && form.error) {
-			bootstrapModal?.show();
-		}
+	
+	let display = false;
+	let isOpen = false;
+	function openModal() {
+		const body = document.body;
+		display = true;
+		isOpen = true;
+		body.style.overflow = 'hidden';
+	}
+	function closeModal() {
+		const body = document.body;
+		display = false;
+		isOpen = false;
+		body.style.overflow = 'auto';
+	}
+	if (form && form.error) {
+		display = true;
+		isOpen = true;
+	}
+
+	onDestroy(() => {
+		console.log("SALIENDO DE SLUG PRODUCTOS");
+		closeModal();
 	});
 
 	let disabled = true;
@@ -123,7 +137,7 @@
 			>
 			<br /><br />
 			<div class="buttons">
-				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal"
+				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" on:click={openModal}
 					>Modificar</button
 				>
 				<div class="deleteForm">
@@ -138,12 +152,12 @@
 
 <!-- MODAL -->
 <div
-	class="modal"
-	bind:this={modal}
+	class="modal fade"
 	id="myModal"
 	tabindex="-1"
 	aria-labelledby="exampleModalLabel"
-	aria-hidden="true"
+	data-bs-backdrop="false"
+	style={display ? 'display: unset;' : 'display: none;'}
 >
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -152,7 +166,13 @@
 				<h5 class="modal-title" id="exampleModalLabel">
 					Detalle del producto: {producto.id} | {producto.name}
 				</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+					on:click={closeModal}
+				/>
 			</div>
 			<div class="modal-body">
 				<form action="?/actualizar" method="POST">
@@ -266,9 +286,17 @@
 	</div>
 </div>
 
+{#if isOpen}
+	<div class="modal-backdrop show alo" style="display: unset!important;"/>
+{/if}
+
 <!-- TERMINA MODAL -->
 
 <style>
+	/* :global(body) {
+		overflow: hidden;
+	} */
+
 	.container {
 		display: flex;
 		justify-content: center;
@@ -416,6 +444,18 @@
 		width: 100%;
 	}
 
+	/* #modalShadow { */
+		/* display: block!important;
+		opacity: 1!important;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: #002952!important; */
+		/* display: unset!important; */
+	/* } */
+
 	@media only screen and (max-device-width: 480px) {
 		.containerMain {
 			margin-top: 15%;
@@ -491,7 +531,7 @@
 
 		.modal-dialog {
 			margin-top: 15%;
-		} 
+		}
 	}
 
 	@media only screen and (min-device-width: 768px) and (max-device-width: 991px) {
