@@ -378,7 +378,7 @@
 			margin-top: 13%;
 		}
 		.modal-dialog {
-			margin-top: 20%;
+			margin-top: 15%;
 		}
 	}
 
@@ -420,6 +420,10 @@
 		.section-products .single-product {
 			margin-bottom: inherit;
 			height: 100% !important;
+		}
+
+		.modal-dialog {
+			margin-top: 5%;
 		}
 	}
 
