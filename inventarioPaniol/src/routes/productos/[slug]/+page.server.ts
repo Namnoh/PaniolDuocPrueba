@@ -63,7 +63,7 @@ export const actions: Actions = {
 				if (nameList.includes(name.toString())) {
 					RegistrarResponse.imgUrl = '';
 					RegistrarResponse.error = true;
-					RegistrarResponse.emailUsed = true;
+					RegistrarResponse.nameUsed = true;
 					RegistrarResponse.message = '¡Este nombre de producto ya está en uso!';
 					return fail(400, RegistrarResponse);
 				}

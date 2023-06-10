@@ -18,28 +18,21 @@
 		cat = producto.categoria;
 	}
 
-	
 	let display = false;
 	let isOpen = false;
 	function openModal() {
-		const body = document.body;
 		display = true;
 		isOpen = true;
-		body.style.overflow = 'hidden';
 	}
 	function closeModal() {
-		const body = document.body;
 		display = false;
 		isOpen = false;
-		body.style.overflow = 'auto';
 	}
 	if (form && form.error) {
-		display = true;
-		isOpen = true;
+		openModal();
 	}
 
 	onDestroy(() => {
-		console.log("SALIENDO DE SLUG PRODUCTOS");
 		closeModal();
 	});
 
@@ -137,8 +130,11 @@
 			>
 			<br /><br />
 			<div class="buttons">
-				<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" on:click={openModal}
-					>Modificar</button
+				<button
+					class="btn btn-primary"
+					data-bs-toggle="modal"
+					data-bs-target="#myModal"
+					on:click={openModal}>Modificar</button
 				>
 				<div class="deleteForm">
 					<form action="?/eliminar&id={producto.id}" method="POST">
@@ -152,7 +148,7 @@
 
 <!-- MODAL -->
 <div
-	class="modal fade"
+	class="modal"
 	id="myModal"
 	tabindex="-1"
 	aria-labelledby="exampleModalLabel"
@@ -287,16 +283,11 @@
 </div>
 
 {#if isOpen}
-	<div class="modal-backdrop show alo" style="display: unset!important;"/>
+	<div class="modal-backdrop show alo" style="display: unset!important;" />
 {/if}
-
 <!-- TERMINA MODAL -->
 
 <style>
-	/* :global(body) {
-		overflow: hidden;
-	} */
-
 	.container {
 		display: flex;
 		justify-content: center;
@@ -445,7 +436,7 @@
 	}
 
 	/* #modalShadow { */
-		/* display: block!important;
+	/* display: block!important;
 		opacity: 1!important;
 		position: fixed;
 		top: 0;
@@ -453,7 +444,7 @@
 		width: 100vw;
 		height: 100vh;
 		background-color: #002952!important; */
-		/* display: unset!important; */
+	/* display: unset!important; */
 	/* } */
 
 	@media only screen and (max-device-width: 480px) {
