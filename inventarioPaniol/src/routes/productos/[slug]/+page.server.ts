@@ -35,7 +35,8 @@ export const actions: Actions = {
 	}: RequestEvent): Promise<registerFormData | ActionFailure<registerFormData> | Redirect> => {
 		const registrarFormData = await request.formData();
 		const name = registrarFormData.get('name') ?? productAllData.name;
-		const stock = registrarFormData.get('stock') ?? productAllData.stock;
+		const stockTotal = registrarFormData.get('stockTotal') ?? productAllData.stockTotal;
+		const stockDisponible = registrarFormData.get('stockDisponible') ?? productAllData.stockDisponible;
 		const categoria = registrarFormData.get('categoria') ?? productAllData.categoria;
 		let imgUrl = registrarFormData.get('imgUrl') ?? productAllData.imgUrl;
 		imgUrl = registrarFormData.get('imgUrl') == '' ? productAllData.imgUrl : imgUrl; 
@@ -48,7 +49,8 @@ export const actions: Actions = {
 			message: '',
 			id: productAllData.id,
 			name,
-			stock,
+			stockTotal,
+			stockDisponible,
 			categoria,
 			imgUrl,
 			descripcion
@@ -79,7 +81,8 @@ export const actions: Actions = {
 		const filter = await { id: RegistrarResponse.id };
 		const prodToInsert = await registerFormToProdWithoutId(RegistrarResponse);
 		const resultOfInsert = await updateProd(filter, prodToInsert);
-		// console.log(resultOfInsert.modifiedCount);
+		// console.log(prodToInsert);
+		// console.log(resultOfInsert);
 		if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount > 0) {
 			throw redirect(303, `/productos/${productAllData.id}`);
 		} else if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount == 0) {

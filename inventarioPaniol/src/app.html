@@ -41,16 +41,17 @@
 				for (let mutation of mutationsList) {
 					if (mutation.target === document.body && mutation.attributeName === 'class') {
 						const bodyClasses = document.body.classList;
-						console.log('Nuevas clases del body:', bodyClasses);
+						// console.log('Nuevas clases del body:', bodyClasses);
 						const loop = bodyClasses.length;
 
 						for (let i = 0; i < loop; i++) {
 							var element = bodyClasses[i];
 							if (element == "modal-open") {
-								console.log("Eliminando clase... " + element)
+								// console.log("Eliminando clase... " + element)
 								const body = document.getElementById('body');
 								body.classList.remove('modal-open');
 								body.style.overflow = 'auto';
+								body.style.padding= 0;
 							}
 						}
 					}

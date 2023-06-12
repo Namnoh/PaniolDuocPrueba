@@ -1,9 +1,16 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { user } from '../stores';
-	$:User = $user;
+	$: User = $user;
+
+	export let data;
+	const {text} = data;
+
+	import Toast from './toast.svelte';
+	import { toast } from './notifications';
 </script>
 
-
+<Toast />
 <!-- BODY INICIO -->
 <div class="container">
 	<div class="containerMain">
@@ -11,12 +18,15 @@
 			<div class="cartaCol col">
 				<h2 class="cartaText">¡Reserva los artículos que quieras aquí!</h2>
 				{#if User}
-				<p class="cartaText">{User?.name??''} ya puedes reservar los artículos que quieres con nuestra plataforma.</p>
-				<a href="/reservar" class="btn btn-primary">Reservar Aquí</a>
+					<p class="cartaText">
+						{User?.name ?? ''} ya puedes reservar los artículos que quieres con nuestra plataforma.
+					</p>
+					<a href="/reservar" class="btn btn-primary">Reservar Aquí</a>
+					<button class="btn btn-success" on:click={() => toast('OLAA')}>Notificación</button>
 				{/if}
 				{#if !User}
-				<p class="cartaText">Inicia sesión para utilizar los servicios de reserva.</p>
-				<a href="/login" class="btn btn-primary">Iniciar sesión</a>
+					<p class="cartaText">Inicia sesión para utilizar los servicios de reserva.</p>
+					<a href="/login" class="btn btn-primary">Iniciar sesión</a>
 				{/if}
 			</div>
 			<div class="cartaCol col imgBox">
@@ -24,14 +34,14 @@
 					class="cartaImagen"
 					src="../duoc-amarillo.jpeg"
 					alt="Logo Duoc"
-                    width="80%"
-                    height="40%"
+					width="80%"
+					height="40%"
 				/>
 			</div>
 		</div>
 	</div>
 
-	<br/><br/><br/><br/>
+	<br /><br /><br /><br />
 
 	<div class="row">
 		<div class="col cartas2">
@@ -92,100 +102,99 @@
 			</div>
 		</div>
 	</div>
-    <br><br><br><br>
+	<br /><br /><br /><br />
 </div>
+
+<!-- FIN CSS -->
+
 <!-- FIN BODY INICIO -->
 
 <!-- INICIO CSS -->
 <style>
-.containerMain {
-    display: grid;
-    min-height: 70%;
-    text-align: center;
-    background-image: url(https://www.duoc.cl/wp-content/uploads/2022/05/Maipu-nueva-1920x600.jpeg);
-    background-size: cover;
-    box-shadow: 0 0 25px #222;
-    margin-top: 10%;
-}
+	.containerMain {
+		display: grid;
+		min-height: 70%;
+		text-align: center;
+		background-image: url(https://www.duoc.cl/wp-content/uploads/2022/05/Maipu-nueva-1920x600.jpeg);
+		background-size: cover;
+		box-shadow: 0 0 25px #222;
+		margin-top: 10%;
+	}
 
-.cartas {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    backdrop-filter: blur(3px);
-    background: rgba(0, 0, 0, 0.76);
-}
+	.cartas {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		backdrop-filter: blur(3px);
+		background: rgba(0, 0, 0, 0.76);
+	}
 
-.cartaImagen {
-    /* background-image: url(https://duoc.hiringroom.com/data/accounts/duoc/microsite/e1f179a255d28e2c616c432f163986ed.jpg); */
-    border-radius: 50px;
-}
+	.cartaImagen {
+		/* background-image: url(https://duoc.hiringroom.com/data/accounts/duoc/microsite/e1f179a255d28e2c616c432f163986ed.jpg); */
+		border-radius: 50px;
+	}
 
-.cartaCol {
-    padding: 5% 5% 5% 5%;
-}
+	.cartaCol {
+		padding: 5% 5% 5% 5%;
+	}
 
-.cartaText {
-    color: antiquewhite;
-}
+	.cartaText {
+		color: antiquewhite;
+	}
 
+	.cartas2 {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-.cartas2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+	.card {
+		text-align: center;
+		box-shadow: 0 0 10px #2222225b;
+		margin-bottom: 5%;
+	}
 
-.card {
-    text-align: center;
-    box-shadow: 0 0 10px #2222225b;
-    margin-bottom: 5%;
-}
+	/* RESPONSIVE CELULAR */
+	@media only screen and (max-device-width: 480px) {
+		.cartaCol {
+			padding-top: 15%;
+			padding-bottom: 15%;
+		}
+		.imgBox {
+			display: none;
+		}
 
-/* RESPONSIVE CELULAR */
-@media only screen and (max-device-width : 480px) {
-    .cartaCol {
-        padding-top: 15%;
-        padding-bottom: 15%;
-    }
-    .imgBox {
-        display: none;
-    }
+		.card {
+			margin-bottom: 10%;
+		}
+	}
 
-    .card {
-        margin-bottom: 10%;
-    }
-}
+	/* RESPONSIVE TABLET */
+	@media (min-width: 481px) and (max-width: 767px) {
+		.cartaCol {
+			padding-top: 15%;
+			padding-bottom: 15%;
+		}
+		.imgBox {
+			display: none;
+		}
 
-/* RESPONSIVE TABLET */
-@media (min-width: 481px) and (max-width: 767px) {
-    .cartaCol {
-        padding-top: 15%;
-        padding-bottom: 15%;
-    }
-    .imgBox {
-        display: none;
-    }
+		.card {
+			margin-bottom: 10%;
+		}
+	}
 
-    .card {
-        margin-bottom: 10%;
-    }
-}
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		.cartaCol {
+			padding-top: 15%;
+			padding-bottom: 15%;
+		}
+		.imgBox {
+			display: none;
+		}
 
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-    .cartaCol {
-        padding-top: 15%;
-        padding-bottom: 15%;
-    }
-    .imgBox {
-        display: none;
-    }
-
-    .card {
-        margin-bottom: 10%;
-    }
-}
-
-
+		.card {
+			margin-bottom: 10%;
+		}
+	}
 </style>
-<!-- FIN CSS -->

@@ -16,4 +16,11 @@ declare global {
 		// interface Platform {}
 	}
 }
+
+export declare class CartItem {
+	id: number
+	name: string
+	cantidad: number
+}
+
 export {};

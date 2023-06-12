@@ -27,7 +27,8 @@
 						<img class="card-img-top" src={p.imgUrl} alt="Card image" />
 						<div class="card-body">
 							<h5 class="card-title">{p.name}</h5>
-							<p class="card-text">{p.categoria}</p>
+							<small>Stock Total: {p.stockTotal}</small>
+							<!-- <p class="card-text">{p.categoria}</p> -->
 							<a href="/productos/{p.id}" class="btn btn-primary">Ver Detalles</a>
 						</div>
 					</div>
@@ -102,6 +103,10 @@
 
 	.addSmall {
 		display: none;
+	}
+
+	small {
+		margin-bottom: 5px;
 	}
 
 	/* RESPONSIVE CELULAR */

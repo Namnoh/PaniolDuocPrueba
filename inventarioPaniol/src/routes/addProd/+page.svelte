@@ -32,7 +32,7 @@
 				/>
 			</div>
 			<div class="form-item">
-				<label for="stock">Stock<sup><small>*</small></sup></label>
+				<label for="stock">Stock Total<sup><small>*</small></sup></label>
 				<input value={form?.stock ?? ''} id="stock" type="number" name="stock" required />
 			</div>
 			<div class="form-item">

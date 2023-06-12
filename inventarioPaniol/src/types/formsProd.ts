@@ -2,12 +2,13 @@ export interface registerFormData {
     nameUsed: boolean,
     error:boolean,
     message: string,
-    id: number
+    id: number,
     name: FormDataEntryValue,
-    stock: FormDataEntryValue,
+    stockTotal: FormDataEntryValue,
+    stockDisponible: FormDataEntryValue,
     categoria: FormDataEntryValue,
     imgUrl: FormDataEntryValue,
-    descripcion: FormDataEntryValue
+    descripcion: FormDataEntryValue,
     [key:string]: any
 }
 

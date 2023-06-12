@@ -10,7 +10,8 @@ export const actions: Actions = {
     }: RequestEvent): Promise<registerFormData | ActionFailure<registerFormData> | Redirect> => {
         const registrarFormData = await request.formData();
 		const name = registrarFormData.get('name') ?? '';
-		const stock = registrarFormData.get('stock') ?? '';
+		const stockTotal = registrarFormData.get('stock') ?? '';
+		const stockDisponible = registrarFormData.get('stock') ?? '';
 		const categoria = registrarFormData.get('categoria') ?? '';
 		const imgUrl = registrarFormData.get('imgUrl') ?? '';
         const descripcion = registrarFormData.get('descripcion') ?? '';
@@ -22,7 +23,8 @@ export const actions: Actions = {
 			message: '',
 			id: 0,
 			name,
-			stock,
+			stockTotal,
+			stockDisponible,
 			categoria,
 			imgUrl,
 			descripcion

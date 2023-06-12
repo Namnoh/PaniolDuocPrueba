@@ -6,10 +6,10 @@
 	import './common/mainStyles.css';
 	import './common/footerStyles.css';
 
-	import toast, { Toaster } from 'svelte-french-toast';
-
 	import { user } from '../stores';
-	import { onMount } from 'svelte';
+	import {  get } from 'svelte/store';
+	import { afterUpdate, onMount } from 'svelte';
+
 	export let data;
 
 	$: User = data?.authedUser;
@@ -22,13 +22,27 @@
 		const newUser = data?.authedUser;
 		user.set(newUser);
 	}
-	// console.log(`User: ${User}`);
-</script>
 
-<Toaster />
+	import Toast from './toast.svelte';
+	import { toast } from './notifications';
+	import { msg } from './notifications';
+
+	let noti;
+	afterUpdate(() => {
+		noti = get(msg);
+		// console.log(noti);
+		if (noti) {
+			toast(noti);
+		}
+		// console.log("LAYOUT ACTUALIZADO")
+	})
+
+</script>
 
 <div class="app">
 	<Header />
+
+	<Toast />
 
 	<main>
 		<slot />

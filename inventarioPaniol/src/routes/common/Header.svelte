@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { user } from '../../stores';
+	import CarritoModal from "$lib/carritoModal.svelte";
+
 	$: User = $user;
 	// console.log(`HEADER | User: ${User}`)
 
@@ -16,6 +18,11 @@
 			showClass = true;
 			endClass = true;
 		}
+	}
+
+	let showCarrito = false;
+	const handleCloseCarrito = () => {
+		showCarrito = false;
 	}
 </script>
 
@@ -120,12 +127,6 @@
 					</li>
 					<li class="nav-item">
 						<a
-							class="nav-link rutaNav {$page.url.pathname === '/testing' ? 'currentNavStyle' : ''}"
-							href="/testing">Testeo</a
-						>
-					</li>
-					<li class="nav-item">
-						<a
 							class="nav-link rutaNav {$page.url.pathname === '/productos'
 								? 'currentNavStyle'
 								: ''}"
@@ -143,10 +144,10 @@
 				<!-- SHOPPING -->
 				<!-- svelte-ignore a11y-missing-attribute -->
 				{#if User}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<a
 						class="text-reset me-3 {showClass ? 'noti' : ''}"
-						data-bs-toggle="modal"
-						data-bs-target="#reservaModal"
+						on:click={() => showCarrito = true}
 					>
 						<i class="fas fa-shopping-cart" style="cursor: pointer" />
 					</a>
@@ -225,74 +226,4 @@
 </nav>
 <!-- FIN NAVBAR -->
 
-<!-- MODAL -->
-<div
-	class="modal fade"
-	id="reservaModal"
-	tabindex="-1"
-	aria-labelledby="reservaModalLabel"
-	aria-hidden="true"
->
-	<div class="modal-dialog modal-lg modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="reservaModalLabel">Reserva</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-			</div>
-			<div class="modal-body">
-				<table class="table">
-					<thead>
-						<tr>
-							<th><div class="itemTabla">ID</div></th>
-							<th><div class="itemTabla">Producto</div></th>
-							<th><div class="itemTabla">Cantidad</div></th>
-							<th><div class="itemTabla">Eliminar</div></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><div class="itemTabla">1</div></td>
-							<td><div class="itemTabla">Teclado</div></td>
-							<td><div class="itemTabla">1</div></td>
-							<td>
-								<div class="itemTabla">
-									<button type="button" class="btn btn-danger">x</button>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td><div class="itemTabla">32</div></td>
-							<td><div class="itemTabla">Balón de furbo</div></td>
-							<td><div class="itemTabla">2</div></td>
-							<td>
-								<div class="itemTabla">
-									<button type="button" class="btn btn-danger">x</button>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-					<tbody class="carrito" />
-				</table>
-				<hr />
-				<div class="row">
-					<div class="col-md-6 mb-3">
-						<label for="fecha" class="form-label">Fecha</label>
-						<input type="date" class="form-control" id="fecha" />
-					</div>
-					<div class="col-md-6 mb-3">
-						<label for="hora" class="form-label">Hora</label>
-						<input type="time" class="form-control" id="hora" />
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" id="vaciar-carrito"> Vaciar carrito </button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cerrar </button>
-				<button type="button" class="btn btn-primary" id="confirmar-reserva">
-					Confirmar reserva
-				</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- FIN MODAL -->
+<CarritoModal showCarrito={showCarrito} on:close={handleCloseCarrito}/>

@@ -1,5 +1,7 @@
 <script lang="ts">
 	/** @type {import('./$types').PageData} */
+	import { addToCart } from '../../cart.js';
+
 	export let data;
 
 	$: ({ productos } = data);
@@ -127,10 +129,11 @@
 						{#each productos as p}
 							<div class="col-md-6 col-lg-4 col-xl-3 cardFlex">
 								<div class="single-product">
+									<!-- svelte-ignore a11y-invalid-attribute -->
 									<div class="part-1">
 										<img src={p.imgUrl} alt="Imagen del Producto" />
 										<ul>
-											<li><a href="#"><i class="fas fa-shopping-cart" /></a></li>
+											<li><a href="#" on:click|preventDefault={() => addToCart(p)}><i class="fas fa-shopping-cart" /></a></li>
 											<li><a href="#"><i class="fas fa-heart" /></a></li>
 											<li><a href="#"><i class="fas fa-plus" /></a></li>
 											<li>
@@ -145,7 +148,7 @@
 									</div>
 									<div class="part-2">
 										<h3 class="product-title"><center>{p.name}</center></h3>
-										<h5 class="product-title"><center>Stock: {p.stock}</center></h5>
+										<h5 class="product-title"><center>Stock Disponible: {p.stockDisponible}</center></h5>
 									</div>
 								</div>
 							</div>
@@ -198,14 +201,14 @@
 						<div class="col-md-6">
 							<h4>{product.name}</h4>
 							<p>Categoría: {product.categoria}</p>
-							<p>Stock: {product.stock}</p>
-							<p>Descripcion: {product.descripcion}</p>
+							<p>Stock Disponible: {product.stockDisponible}</p>
+							<p>Descripcion: <br/>{product.descripcion}</p>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-					<button type="button" class="btn btn-primary">Agregar al carrito</button>
+					<button type="button" class="btn btn-primary" on:click|preventDefault={() => addToCart(product)}>Agregar al carrito</button>
 				</div>
 			{/if}
 		</div>

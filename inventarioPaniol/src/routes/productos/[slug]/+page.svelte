@@ -37,7 +37,7 @@
 	});
 
 	let disabled = true;
-	let changes = [false, false, false, false, false];
+	let changes = [false, false, false, false, false, false];
 	let chg = false;
 	let count;
 	function handleModificarBtn(event) {
@@ -53,32 +53,39 @@
 					changes[0] = false;
 				}
 				break;
-			case 'stock':
+			case 'stockTotal':
 				if (parseInt(inputValue) !== parseInt(name)) {
 					changes[1] = true;
 				} else {
 					changes[1] = false;
 				}
 				break;
-			case 'categoria':
-				if (inputValue !== name) {
+			case 'stockDisponible':
+				if (parseInt(inputValue) !== parseInt(name)) {
 					changes[2] = true;
 				} else {
 					changes[2] = false;
 				}
 				break;
-			case 'imgUrl':
-				if (inputValue !== name && inputValue != '') {
+			case 'categoria':
+				if (inputValue !== name) {
 					changes[3] = true;
 				} else {
 					changes[3] = false;
 				}
 				break;
-			case 'descripcion':
-				if (inputValue !== name) {
+			case 'imgUrl':
+				if (inputValue !== name && inputValue != '') {
 					changes[4] = true;
 				} else {
 					changes[4] = false;
+				}
+				break;
+			case 'descripcion':
+				if (inputValue !== name) {
+					changes[5] = true;
+				} else {
+					changes[5] = false;
 				}
 				break;
 			default:
@@ -118,7 +125,8 @@
 			<h4>Nombre: {producto.name}</h4>
 			<br />
 			<p>Categoría: {producto.categoria}</p>
-			<p>Stock: {producto.stock}</p>
+			<p>Stock Total: {producto.stockTotal}</p>
+			<p>Stock Disponible: {producto.stockDisponible}</p>
 			<p>Descripción:</p>
 			<textarea
 				disabled
@@ -193,13 +201,26 @@
 									</td>
 								</tr>
 								<tr>
-									<th>Stock:</th>
+									<th>Stock Total:</th>
 									<td
 										><input
-											value={form?.stock ?? producto.stock}
-											id="stock"
+											value={form?.stockTotal ?? producto.stockTotal}
+											id="stockTotal"
 											type="number"
-											name="stock"
+											name="stockTotal"
+											on:keyup={handleModificarBtn}
+											required
+										/></td
+									>
+								</tr>
+								<tr>
+									<th>Stock Disponible:</th>
+									<td
+										><input
+											value={form?.stockDisponible ?? producto.stockDisponible}
+											id="stockDisponible"
+											type="number"
+											name="stockDisponible"
 											on:keyup={handleModificarBtn}
 											required
 										/></td
@@ -207,8 +228,8 @@
 								</tr>
 								<tr>
 									<th>Categoría:</th>
-									<td
-										><select
+									<td>
+										<select
 											id="categoria"
 											name="categoria"
 											on:change={handleModificarBtn}
@@ -283,8 +304,9 @@
 </div>
 
 {#if isOpen}
-	<div class="modal-backdrop show alo" style="display: unset!important;" />
+	<div class="modal-backdrop show" style="display: unset!important;" />
 {/if}
+
 <!-- TERMINA MODAL -->
 
 <style>

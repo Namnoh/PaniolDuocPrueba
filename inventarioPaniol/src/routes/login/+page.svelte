@@ -5,45 +5,28 @@
 	export let data;
 
 	import { onMount } from 'svelte';
-	import toast, { Toaster } from 'svelte-french-toast';
 
 	$: clearUser = data?.clearUser;
 
 	$: {
 		if (clearUser) user.set(undefined);
 	}
-
-	let loading = false;
-
-	const submitlogin = () => {
-		loading = true;
-		return async ({ result, update }) => {
-			await update();
-
-			if (result.type === 'success') {
-				toast.success('¡Identificación satisfactoria!');
-				return;
-			}
-			loading = false;
-		};
-	};
 </script>
 
-<Toaster />
 <div class="container">
 	<div class="containerMain">
 		<br /><br />
 		<h2>LOGIN</h2>
 		<hr />
 		<br />
-		<form use:enhance method="post" action="?/login" use:enhance={submitlogin}>
+		<form use:enhance method="post" action="?/login">
 			<div class="form-item">
 				<label for="email">Email<sup><small class="required">*</small></sup></label>
-				<input value={form?.email ?? ''} id="email" type="email" name="email" required />
+				<input value={form?.email ?? ''} id="email" type="email" name="email" required/>
 			</div>
 			<div class="form-item">
 				<label for="password">Password<sup><small class="required">*</small></sup></label>
-				<input id="password" type="password" name="password" required />
+				<input id="password" type="password" name="password" required/>
 			</div>
 
 			<div class="form-item">
@@ -55,7 +38,7 @@
 			<br />
 
 			<div class="form-item">
-				<button type="submit" class="btn btn-primary" on:click={submitlogin}>Login</button>
+				<button type="submit" class="btn btn-primary">Login</button>
 			</div>
 
 			<br />
