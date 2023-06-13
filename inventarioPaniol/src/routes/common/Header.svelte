@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { user } from '../../stores';
-	import CarritoModal from "$lib/carritoModal.svelte";
+	import CarritoModal from '$lib/carritoModal.svelte';
 
 	$: User = $user;
 	// console.log(`HEADER | User: ${User}`)
@@ -23,7 +23,7 @@
 	let showCarrito = false;
 	const handleCloseCarrito = () => {
 		showCarrito = false;
-	}
+	};
 </script>
 
 <!-- NABAR -->
@@ -125,14 +125,16 @@
 							href="/historial">Historial</a
 						>
 					</li>
-					<li class="nav-item">
-						<a
-							class="nav-link rutaNav {$page.url.pathname === '/productos'
-								? 'currentNavStyle'
-								: ''}"
-							href="/productos">Gestionar Productos</a
-						>
-					</li>
+					{#if User.type == 'Pañolero'}
+						<li class="nav-item">
+							<a
+								class="nav-link rutaNav {$page.url.pathname === '/productos'
+									? 'currentNavStyle'
+									: ''}"
+								href="/productos">Gestionar Productos</a
+							>
+						</li>
+					{/if}
 				{/if}
 			</ul>
 			<!-- Left links -->
@@ -147,7 +149,7 @@
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<a
 						class="text-reset me-3 {showClass ? 'noti' : ''}"
-						on:click={() => showCarrito = true}
+						on:click={() => (showCarrito = true)}
 					>
 						<i class="fas fa-shopping-cart" style="cursor: pointer" />
 					</a>
@@ -168,17 +170,13 @@
 							<li>
 								<a
 									class="dropdown-item {$page.url.pathname === '/login' ? 'currentNavStyle' : ''}"
-									href="/login"
-									
-									>Iniciar Sesión</a
+									href="/login">Iniciar Sesión</a
 								>
 							</li>
 							<li>
 								<a
 									class="dropdown-item {$page.url.pathname === '/signup' ? 'currentNavStyle' : ''}"
-									href="/signup"
-									
-									>Registrarse</a
+									href="/signup">Registrarse</a
 								>
 							</li>
 						{/if}
@@ -226,4 +224,4 @@
 </nav>
 <!-- FIN NAVBAR -->
 
-<CarritoModal showCarrito={showCarrito} on:close={handleCloseCarrito}/>
+<CarritoModal {showCarrito} on:close={handleCloseCarrito} />
