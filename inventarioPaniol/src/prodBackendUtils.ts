@@ -89,20 +89,19 @@ export const subStock = async (items) => {
 				const prodToInsert: ProductosWithoutId = await Prod[0];
 				const resultOfInsert = await updateProd(filter, prodToInsert);
 				if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount > 0) {
-					return resultado;
+					// SE HIZO LA MODIFICACIÓN EXITOSAMENTE
 				} else {
 					resultado.err = true;
 					resultado.msg = 'Error al hacer la operación';
-					return resultado;
 				}
 			} else {
 				resultado.err = true;
 				resultado.msg = 'Stock Insuficiente';
 				resultado.item = `${Prod[0].id} - ${Prod[0].name}`;
-				return resultado;
 			}
 		}
 	}
+	return resultado;
 };
 
 export const addProduct = async (items) => {
@@ -123,12 +122,12 @@ export const addProduct = async (items) => {
 			const prodToInsert: ProductosWithoutId = await Prod[0];
 			const resultOfInsert = await updateProd(filter, prodToInsert);
 			if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount > 0) {
-				return resultado;
+				// LA MODIFICACIÓN SE HIZO CORRECTAMENTE
 			} else {
 				resultado.err = true;
 				resultado.msg = 'Error al hacer la operación';
-				return resultado;
 			}
 		}
 	}
+	return resultado;
 };

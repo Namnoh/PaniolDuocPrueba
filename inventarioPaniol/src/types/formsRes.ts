@@ -1,8 +1,8 @@
-export interface registerFormData {
+export interface registerResFormData {
     error:boolean,
     message: string,
-    date: FormDataEntryValue,
-    hour: FormDataEntryValue,
+    dateReserva: FormDataEntryValue,
+    dateDevolucion: FormDataEntryValue,
     estado: FormDataEntryValue,
     // productos: FormDataEntryValue,
     // cantidad: FormDataEntryValue,

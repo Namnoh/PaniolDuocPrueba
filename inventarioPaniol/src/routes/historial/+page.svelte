@@ -24,8 +24,14 @@
 		}
 	}
 
+	let dateReserva;
+	let currentDateReserva;
+	let dateDevolucion;
+	let dateMinDev;
+	let dateMaxDev;
+	let dateMaxRes;
+
 	let cat;
-	let modificarBtn;
 	let display = false;
 	let isOpen = false;
 	function showModal(r) {
@@ -35,9 +41,33 @@
 		} else {
 			cat = reserva?.state;
 		}
-		console.log(cat);
+
+		dateReserva = r.dateReserva;
+		currentDateReserva = dateReserva;
+		let maxDate = new Date(dateReserva);
+		maxDate.setDate(maxDate.getDate() + 28);
+		dateMaxRes = maxDate.toISOString().split('T')[0];
+		dateMinDev = reserva.dateReserva;
+		dateMaxDev = dateMaxRes;
+		updateMaxDate(dateReserva);
+
+		// console.log(cat);
 		display = true;
 		isOpen = true;
+	}
+
+	function updateMaxDate(dateReserva) {
+		currentDateReserva = dateReserva;
+		if (dateReserva) {
+			// console.log("PRIMERA OPCIÓN")
+			// console.log("DATE RESERVA ", dateReserva);
+			const selectedDate = new Date(dateReserva);
+			selectedDate.setDate(selectedDate.getDate() + 7);
+			dateMaxDev = selectedDate.toISOString().split('T')[0];
+			// console.log("DATEMAXDEV:",dateMaxDev);
+			dateMinDev = dateReserva;
+			// console.log("DATEMINDEV:",dateMinDev);
+		}
 	}
 
 	function closeModal() {
@@ -56,18 +86,18 @@
 	function handleModificarBtn(event) {
 		let inputId = event.srcElement.id;
 		let inputValue = event.srcElement.value;
-		console.log(inputValue);
+		// console.log(inputValue);
 		let name = reserva[inputId];
 
 		switch (inputId) {
-			case 'date':
+			case 'dateReserva':
 				if (inputValue !== name) {
 					changes[0] = true;
 				} else {
 					changes[0] = false;
 				}
 				break;
-			case 'hour':
+			case 'dateDevolucion':
 				if (inputValue !== name) {
 					changes[1] = true;
 				} else {
@@ -98,7 +128,12 @@
 		// console.log(`CHG: ${chg}`);
 
 		if (chg) {
-			disabled = false;
+			// console.log(dateDevolucion.value < currentDateReserva)
+			if (dateDevolucion.value < currentDateReserva) {
+				disabled = true;
+			} else {
+				disabled = false;
+			}
 		} else {
 			disabled = true;
 		}
@@ -135,8 +170,8 @@
 						{#each reservas as r}
 							<tr>
 								<td><div class="itemTabla">{r.id}</div></td>
-								<td><div class="itemTabla">{r.date}</div></td>
-								<td><div class="itemTabla">{r.hour}</div></td>
+								<td><div class="itemTabla">{r.dateReserva}</div></td>
+								<td><div class="itemTabla">{r.dateDevolucion}</div></td>
 								<td><div class="itemTabla">{r.user.name}</div></td>
 								<!-- <td><div class="itemTabla">{r.user.name}</div></td> -->
 								<td>
@@ -163,8 +198,8 @@
 						{#each reservas as r}
 							<tr>
 								<td><div class="itemTabla">{r.id}</div></td>
-								<td><div class="itemTabla">{r.date}</div></td>
-								<td><div class="itemTabla">{r.hour}</div></td>
+								<td><div class="itemTabla">{r.dateReserva}</div></td>
+								<td><div class="itemTabla">{r.dateDevolucion}</div></td>
 								<td><div class="itemTabla">{r.user.name}</div></td>
 								<td>
 									{#each r.items as i}
@@ -226,7 +261,7 @@
 				</div>
 				<div class="modal-body">
 					{#if User.type == 'Pañolero'}
-						<form action="?/actualizar" method="POST">
+						<form action="?/actualizar&id={reserva.id}" method="POST">
 							<div class="table-responsive">
 								<table class="table table-striped">
 									<tbody>
@@ -242,13 +277,16 @@
 											<th>Fecha Reserva:</th>
 											<td
 												><input
-													value={form?.date ?? reserva.date}
-													id="date"
+													id="dateReserva"
 													type="date"
-													name="date"
+													name="dateReserva"
 													class="input"
+													value={form?.dateReserva ?? reserva.dateReserva}
+													min={reserva.dateReserva}
+													max={dateMaxRes}
+													bind:this={dateReserva}
+													on:input={() => updateMaxDate(dateReserva.value)}
 													on:input={handleModificarBtn}
-													required
 												/></td
 											>
 										</tr>
@@ -256,13 +294,15 @@
 											<th>Fecha Devolución:</th>
 											<td
 												><input
-													value={form?.hour ?? reserva.hour}
-													id="hour"
-													type="time"
-													name="hour"
+													id="dateDevolucion"
+													type="date"
+													name="dateDevolucion"
 													class="input"
+													value={form?.dateDevolucion ?? reserva.dateDevolucion}
+													min={dateMinDev}
+													max={dateMaxDev}
+													bind:this={dateDevolucion}
 													on:input={handleModificarBtn}
-													required
 												/></td
 											>
 										</tr>
@@ -297,7 +337,7 @@
 							>
 						</form>
 					{:else}
-						<form action="?/modificar" method="POST">
+						<form action="?/actualizar&id={reserva.id}" method="POST">
 							<div class="table-responsive">
 								<table class="table table-striped">
 									<tbody>
@@ -311,11 +351,24 @@
 										</tr>
 										<tr>
 											<th>Fecha Reserva:</th>
-											<td>{reserva.date}</td>
+											<td>{reserva.dateReserva}</td>
 										</tr>
 										<tr>
 											<th>Fecha Devolución:</th>
-											<td>{reserva.hour}</td>
+											<td
+												><input
+													id="dateDevolucion"
+													type="date"
+													name="dateDevolucion"
+													class="input"
+													value={form?.dateDevolucion ?? reserva.dateDevolucion}
+													min={dateMinDev}
+													max={dateMaxDev}
+													bind:this={dateDevolucion}
+													on:input={handleModificarBtn}
+													required
+												/></td
+											>
 										</tr>
 										<tr>
 											<th>Productos:</th>
@@ -458,6 +511,10 @@
 		transition: all 0.3s ease-in-out;
 		text-align: center;
 		color: #ffff;
+	}
+
+	input[type='date']::-webkit-calendar-picker-indicator {
+		filter: invert(100%);
 	}
 
 	@media only screen and (max-device-width: 480px) {

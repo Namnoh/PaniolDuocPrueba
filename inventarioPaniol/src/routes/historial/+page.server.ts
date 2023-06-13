@@ -3,9 +3,10 @@ import { PageServerLoad } from './$types';
 import { get } from 'svelte/store';
 import { user } from '../../stores';
 import { findResByUser, updateRes, registerResWithoutId, delRes } from '../../resBackendUtils';
-import { addProduct } from '../../prodBackendUtils';
+import { addProduct, subStock } from '../../prodBackendUtils';
 import { Actions, RequestEvent, ActionFailure, Redirect } from '@sveltejs/kit';
 import { fail, redirect } from '@sveltejs/kit';
+import { registerResFormData } from '../../types/formsRes';
 
 export const load: PageServerLoad = async function () {
 	let User = get(user);
@@ -44,6 +45,13 @@ export const actions: Actions = {
 		if (!id) {
 			return fail(400);
 		}
+		const projection = { _id: 0 };
+		let res = await Reservas.find({ id: id }).project(projection).toArray();
+		res = res[0];
+		console.log(res.state);
+		if (res.state == 'Reservado') {
+			addProduct(res.items);
+		}
 		const del = await delRes(id);
 		throw redirect(303, '/historial');
 	},
@@ -54,6 +62,7 @@ export const actions: Actions = {
 		}
 		const projection = { _id: 0 };
 		let res = await Reservas.find({ id: id }).project(projection).toArray();
+		const wasReserved = res[0].state;
 		res[0].state = 'Cancelado';
 		res = res[0];
 		const filter = await { id: id };
@@ -62,8 +71,18 @@ export const actions: Actions = {
 		// console.log(resultOfInsert);
 		if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount > 0) {
 			// console.log("MODIFICADO EXITOSAMENTE");
-			addProduct(res.items);
-			throw redirect(303, '/historial');
+			console.log(wasReserved)
+			console.log(res);
+			if (wasReserved == 'Reservado') {
+				const result = await addProduct(res.items);
+				if (result?.err != true) {
+					throw redirect(303, `/historial`);
+				} else {
+					return fail(503);
+				}
+			} else {
+				throw redirect(303, '/historial');
+			}
 		} else if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount == 0) {
 			// console.log("NO SE HA MODIFICADO NADA");
 			return fail(503);
@@ -79,6 +98,7 @@ export const actions: Actions = {
 		}
 		const projection = { _id: 0 };
 		let res = await Reservas.find({ id: id }).project(projection).toArray();
+		const wasReserved = res[0].state;
 		res[0].state = 'Devuelto';
 		res = res[0];
 		const filter = await { id: id };
@@ -87,8 +107,18 @@ export const actions: Actions = {
 		// console.log(resultOfInsert);
 		if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount > 0) {
 			// console.log("MODIFICADO EXITOSAMENTE");
-			addProduct(res.items);
-			throw redirect(303, '/historial');
+			console.log(wasReserved);
+			console.log(res.state);
+			if (wasReserved == 'Reservado') {
+				const result = await addProduct(res.items);
+				if (result?.err != true) {
+					throw redirect(303, `/historial`);
+				} else {
+					return fail(503);
+				}
+			} else {
+				throw redirect(303, '/historial');
+			}
 		} else if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount == 0) {
 			// console.log("NO SE HA MODIFICADO NADA");
 			return fail(503);
@@ -96,70 +126,64 @@ export const actions: Actions = {
 			// console.log("ERROR BACKEND");
 			return fail(503);
 		}
+	},
+	actualizar: async ({
+		request,
+		url
+	}: RequestEvent): Promise<
+		registerResFormData | ActionFailure<registerResFormData> | Redirect
+	> => {
+		const id = parseInt(url.searchParams.get('id')!);
+		if (!id) {
+			return fail(400);
+		}
+		const projection = { _id: 0 };
+		let res = await Reservas.find({ id: id }).project(projection).toArray();
+		let resAllData = res[0];
+
+		const registrarFormData = await request.formData();
+		const dateReserva = registrarFormData.get('dateReserva') ?? resAllData.dateReserva;
+		const dateDevolucion = registrarFormData.get('dateDevolucion') ?? resAllData.dateDevolucion;
+		const estado = registrarFormData.get('state') ?? resAllData.state;
+
+		let RegistrarResponse: registerResFormData = {
+			error: false,
+			message: '',
+			id: resAllData.id,
+			dateReserva,
+			dateDevolucion,
+			estado
+		};
+
+		resAllData.dateReserva = dateReserva;
+		resAllData.dateDevolucion = dateDevolucion;
+		resAllData.state = estado;
+
+		const collection = await Reservas;
+
+		const filter = await { id: RegistrarResponse.id };
+		const prodToInsert = await registerResWithoutId(resAllData);
+		const resultOfInsert = await updateRes(filter, prodToInsert);
+		// console.log(resultOfInsert.modifiedCount);
+		if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount > 0) {
+			if (resAllData.state == 'Reservado') {
+				const result = await subStock(resAllData.items);
+				if (result?.err != true) {
+					throw redirect(303, `/historial`);
+				} else {
+					return fail(503, RegistrarResponse);
+				}
+			}
+			throw redirect(303, `/historial`);
+		} else if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount == 0) {
+			RegistrarResponse.error = true;
+			RegistrarResponse.message =
+				'¡Error al actualizar la reserva! No se han ingresado nuevos datos.';
+			return fail(503, RegistrarResponse);
+		} else {
+			RegistrarResponse.error = true;
+			RegistrarResponse.message = '¡Error al actualizar el producto! Intente más tarde.';
+			return fail(503, RegistrarResponse);
+		}
 	}
-	// actualizar: async ({
-	// 	request
-	// }: RequestEvent): Promise<registerFormData | ActionFailure<registerFormData> | Redirect> => {
-	// 	const registrarFormData = await request.formData();
-	// 	const name = registrarFormData.get('name') ?? productAllData.name;
-	// 	const stock = registrarFormData.get('stock') ?? productAllData.stock;
-	// 	const categoria = registrarFormData.get('categoria') ?? productAllData.categoria;
-	// 	let imgUrl = registrarFormData.get('imgUrl') ?? productAllData.imgUrl;
-	// 	imgUrl = registrarFormData.get('imgUrl') == '' ? productAllData.imgUrl : imgUrl;
-	// 	const descripcion = registrarFormData.get('descripcion') ?? productAllData.descripcion;
-
-	// 	let RegistrarResponse: registerFormData = {
-	// 		nameUsed: false,
-	// 		error: false,
-	// 		success: false,
-	// 		message: '',
-	// 		id: productAllData.id,
-	// 		name,
-	// 		stock,
-	// 		categoria,
-	// 		imgUrl,
-	// 		descripcion
-	// 	};
-
-	// 	const collection = await Productos;
-	// 	let nameList: String[];
-
-	// 	try {
-	// 		if (RegistrarResponse.name != productAllData.name) {
-	// 			nameList = await returnNamesList(collection);
-	// 			if (nameList.includes(name.toString())) {
-	// 				RegistrarResponse.imgUrl = '';
-	// 				RegistrarResponse.error = true;
-	// 				RegistrarResponse.nameUsed = true;
-	// 				RegistrarResponse.message = '¡Este nombre de producto ya está en uso!';
-	// 				return fail(400, RegistrarResponse);
-	// 			}
-	// 		}
-	// 	} catch (error: any) {
-	// 		RegistrarResponse.imgUrl = '';
-	// 		RegistrarResponse.error = true;
-	// 		RegistrarResponse.message =
-	// 			'¡Error intentando mandar el formulario! Intente de nuevo en unos minutos!';
-	// 		return fail(500, RegistrarResponse);
-	// 	}
-
-	// 	const filter = await { id: RegistrarResponse.id };
-	// 	const prodToInsert = await registerFormToProdWithoutId(RegistrarResponse);
-	// 	const resultOfInsert = await updateProd(filter, prodToInsert);
-	// 	// console.log(resultOfInsert.modifiedCount);
-	// 	if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount > 0) {
-	// 		throw redirect(303, `/productos/${productAllData.id}`);
-	// 	} else if (resultOfInsert.acknowledged && resultOfInsert.modifiedCount == 0) {
-	// 		RegistrarResponse.imgUrl = '';
-	// 		RegistrarResponse.error = true;
-	// 		RegistrarResponse.message =
-	// 			'¡Error al actualizar el producto! No se han ingresado nuevos datos.';
-	// 		return fail(503, RegistrarResponse);
-	// 	} else {
-	// 		RegistrarResponse.imgUrl = '';
-	// 		RegistrarResponse.error = true;
-	// 		RegistrarResponse.message = '¡Error al actualizar el producto! Intente más tarde.';
-	// 		return fail(503, RegistrarResponse);
-	// 	}
-	// }
 };

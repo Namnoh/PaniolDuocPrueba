@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-    // import { POST } from '../routes/api/regReserva/+server';
+	// import { POST } from '../routes/api/regReserva/+server';
 
 	const dispatch = createEventDispatcher();
 
@@ -10,14 +10,14 @@
 		dispatch('close');
 	};
 
-    import { get } from "svelte/store";
-	import { cartItems } from "../cart";
+	import { get } from 'svelte/store';
+	import { cartItems } from '../cart';
 	import { addToCart, removeFromCart, readCarrito, vaciarCarrito } from '../cart';
 	import { afterUpdate } from 'svelte';
-    import { user } from '../stores';
+	import { user } from '../stores';
 	import { goto } from '$app/navigation';
 
-    $: User = $user;
+	$: User = $user;
 
 	let items = false;
 	let cart = undefined;
@@ -33,36 +33,69 @@
 		activateBtn();
 	}
 
-    let fecha;
-    let hora;
-    async function checkout() {
-		const response = await fetch("api/regReserva", {
-			method: "POST",
-			body: JSON.stringify(
-				{ items: get(cartItems), date: fecha.value, hour: hora.value, user: User }
-			)
+	let dateReserva;
+	let dateDevolucion;
+	async function checkout() {
+		const response = await fetch('api/regReserva', {
+			method: 'POST',
+			body: JSON.stringify({
+				items: get(cartItems),
+				dateReserva: dateReserva.value,
+				dateDevolucion: dateDevolucion.value,
+				user: User
+			})
 		});
 		// console.log(response);
-        const responseData = await response.json();
+		const responseData = await response.json();
 		// console.log(responseData);
-        if (responseData.success) {
-            close();
-            vaciarCarrito();
-            updateCarrito();
+		if (responseData.success) {
+			close();
+			vaciarCarrito();
+			updateCarrito();
 			goto('/historial');
-        } else {
-			console.log("ERROR: ", responseData.errors)
+		} else {
+			console.log('ERROR: ', responseData.errors);
 			if (responseData.item) {
-				console.log("Item sin Stock: ", responseData.item)
-			} 
+				console.log('Item sin Stock: ', responseData.item);
+			}
 		}
-    }
+	}
+
+	let currentDate = new Date().toISOString().split('T')[0];
+	let maxDate = new Date();
+	maxDate.setDate(maxDate.getDate() + 28);
+	let dateMaxRes = maxDate.toISOString().split('T')[0]; 
+
+	let dateMinDev = currentDate;
+	let dateMaxDev = dateMaxRes;
+	function updateMaxDate() {
+		if (dateReserva?.value) {
+			// console.log("PRIMERA OPCIÓN")
+			const selectedDate = new Date(dateReserva.value);
+			selectedDate.setDate(selectedDate.getDate() + 7);
+			dateMaxDev = selectedDate.toISOString().split('T')[0];
+			dateMinDev = dateReserva.value;
+		} else {
+			// console.log("SEGUNDA OPCIÓN")
+			const selectedDate = new Date(currentDate);
+			selectedDate.setDate(selectedDate.getDate() + 7);
+			dateMaxDev = selectedDate.toISOString().split('T')[0];
+			dateMinDev = currentDate;
+		}
+	}
+	updateMaxDate();
 
 	let disabled = true;
-	let dateHour = [false, false];
+	let dateHour = [true, false];
 	function activateBtn() {
 		if (dateHour[0] == true && dateHour[1] == true && items) {
-			disabled = false;
+			// console.log(dateMinDev < dateReserva?.value);
+			if (dateMinDev < dateReserva?.value) {
+				dateHour[1] = false;
+				disabled = true;
+			} else {
+				disabled = false;
+			}
 		} else {
 			disabled = true;
 		}
@@ -141,12 +174,32 @@
 					<hr />
 					<div class="row">
 						<div class="col-md-6 mb-3">
-							<label for="fecha" class="form-label">Fecha</label>
-							<input type="date" class="form-control" id="fecha" bind:this={fecha} on:input={() => dateHour[0] = true} on:input={activateBtn}/>
+							<label for="dateReserva" class="form-label">Fecha Reserva</label>
+							<input
+								type="date"
+								class="form-control"
+								id="dateReserva"
+								value={currentDate}
+								min={currentDate}
+								max={dateMaxRes}
+								bind:this={dateReserva}
+								on:input={() => (dateHour[0] = true)}
+								on:input={activateBtn}
+								on:input={updateMaxDate}
+							/>
 						</div>
 						<div class="col-md-6 mb-3">
-							<label for="hora" class="form-label">Hora</label>
-							<input type="time" class="form-control" id="hora" bind:this={hora} on:input={() => dateHour[1] = true} on:input={activateBtn}>
+							<label for="dateDevolucion" class="form-label">Fecha Devolución</label>
+							<input
+								type="date"
+								class="form-control"
+								id="dateDevolucion"
+								min={dateMinDev}
+								max={dateMaxDev}
+								bind:this={dateDevolucion}
+								on:input={() => (dateHour[1] = true)}
+								on:input={activateBtn}
+							/>
 						</div>
 					</div>
 				</div>
@@ -154,7 +207,13 @@
 					<!-- <button type="button" class="btn btn-danger" id="vaciar-carrito" on:click={vaciarCarrito} on:click={updateCarrito}>
 						Vaciar carrito
 					</button> -->
-					<button type="submit" class="btn btn-primary" id="confirmar-reserva" on:click={() => checkout()} {disabled}>
+					<button
+						type="submit"
+						class="btn btn-primary"
+						id="confirmar-reserva"
+						on:click={() => checkout()}
+						{disabled}
+					>
 						Confirmar reserva
 					</button>
 				</div>

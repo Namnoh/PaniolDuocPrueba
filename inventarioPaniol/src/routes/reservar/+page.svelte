@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	/** @type {import('./$types').PageData} */
 	import { addToCart } from '../../cart.js';
 

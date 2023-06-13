@@ -24,8 +24,8 @@ export const POST: RequestHandler = async ({ request }) => {
 	// console.log(datos);
 
 	const items = datos.items;
-	const date = datos.date;
-	const hour = datos.hour;
+	const dateReserva = datos.dateReserva;
+	const dateDevolucion = datos.dateDevolucion;
 	const user = datos.user;
 
 	const data: Data = {
@@ -37,8 +37,8 @@ export const POST: RequestHandler = async ({ request }) => {
 	let reserva: ReservaWithoutId = {
 		id: 0,
 		items,
-		date,
-		hour,
+		dateReserva,
+		dateDevolucion,
 		user,
 		state: 'Reservado'
 	};

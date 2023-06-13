@@ -24,7 +24,7 @@
 		text-align: center;
 		position: fixed;
 		top: 2%;
-		left: 50%;
+		left: 49%;
 	}
 
 	.notification {
@@ -36,5 +36,25 @@
 		margin: 5%;
 		background-color: var(--color-primary);
 		border-radius: 10px;
+	}
+
+	/* RESPONSIVE CELULAR */
+	@media only screen and (max-device-width: 480px) {
+		.notifications {
+			left: 45%;
+		}
+	}
+
+	/* RESPONSIVE TABLET */
+	@media (min-width: 481px) and (max-width: 767px) {
+		.notifications {
+			left: 46%;
+		}
+	}
+
+	@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+		.notifications {
+			left: 47%;
+		}
 	}
 </style>

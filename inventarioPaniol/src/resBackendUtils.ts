@@ -52,8 +52,8 @@ export const registerRes = async (collection: Collection, res: ReservaWithoutId)
 export const registerResWithoutId = async (reserva : ReservaWithoutId): Promise<ReservaWithoutId> => {
 	const res = {
 		id: reserva.id,
-		date: reserva.date,
-		hour: reserva.hour,
+		dateReserva: reserva.dateReserva,
+		dateDevolucion: reserva.dateDevolucion,
 		items: reserva.items,
 		user: reserva.user,
         state: reserva.state,

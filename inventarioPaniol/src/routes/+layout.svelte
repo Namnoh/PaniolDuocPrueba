@@ -28,14 +28,14 @@
 	import { msg } from './notifications';
 
 	let noti;
-	afterUpdate(() => {
-		noti = get(msg);
-		// console.log(noti);
-		if (noti) {
-			toast(noti);
-		}
-		// console.log("LAYOUT ACTUALIZADO")
-	})
+	// afterUpdate(() => {
+	// 	noti = get(msg);
+	// 	// console.log(noti);
+	// 	if (noti) {
+	// 		toast(noti);
+	// 	}
+	// 	// console.log("LAYOUT ACTUALIZADO")
+	// })
 
 </script>
 
